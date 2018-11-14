@@ -8,7 +8,7 @@
  
 calcCatch <- function(PopN, Mval, Fval){
   Zval <- Mval + Fval
-  if (any(is.na(Zval)) || any(Zval == 0)){
+  if (any(is.na(PopN)) || any(is.na(Zval)) || any(Zval == 0)){
     Catch <- NA
   }else{
     Catch <- PopN * Fval * (1 - exp(-Zval)) / Zval
