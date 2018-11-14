@@ -7,7 +7,7 @@
 calcCatch(PopN, Mval, Fval)
 }
 \arguments{
-\item{PopN}{population abundance, can be number, vector, matrix, data.frame, or list???}
+\item{PopN}{population abundance, can be number, vector, or matrix}
 
 \item{Mval}{natural mortality rate, can be number or same dimension as PopN}
 
