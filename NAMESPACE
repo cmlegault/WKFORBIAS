@@ -2,4 +2,5 @@
 
 export(calcCatch)
 export(calcSurvival)
+export(genIndexAtAge)
 export(genLogisticSelx)
