@@ -4,8 +4,8 @@
 \alias{createOM}
 \title{Create Operating Model}
 \usage{
-createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Wflag, indexflag,
-  catcherrorflag, indexerrorflag, processerrorflag = FALSE)
+createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Fflag, Wflag,
+  indexflag, catcherrorflag, indexerrorflag, processerrorflag = FALSE)
 }
 \arguments{
 \item{years}{vector of years in operating model (OM)}
@@ -20,6 +20,8 @@ createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Wflag, indexflag,
 
 \item{Mflag}{natural mortality option}
 
+\item{Fflag}{fishing mortality option}
+
 \item{Wflag}{weights at age option}
 
 \item{indexflag}{list of index options}
@@ -29,8 +31,6 @@ createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Wflag, indexflag,
 \item{indexerrorflag}{list of options for observation errors in the indices}
 
 \item{processerrorflag}{option for process error in survival equation, default=FALSE}
-
-\item{Fflag}{fishing mortality option}
 }
 \description{
 Define all necessary settings for creating true population values and observations with noise.

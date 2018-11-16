@@ -15,7 +15,7 @@
 #' @param processerrorflag option for process error in survival equation, default=FALSE
 #' @export
 
-createOM <- function(years, nages, nindices, nyear1flag, Rflag, Mflag, Wflag, indexflag, catcherrorflag, indexerrorflag, processerrorflag=FALSE){
+createOM <- function(years, nages, nindices, nyear1flag, Rflag, Mflag, Fflag, Wflag, indexflag, catcherrorflag, indexerrorflag, processerrorflag=FALSE){
   OM <- list()
   return(OM)
 }
