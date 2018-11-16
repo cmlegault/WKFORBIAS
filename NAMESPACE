@@ -3,6 +3,7 @@
 export(addLognormalError)
 export(calcAggregateBiomass)
 export(calcCatch)
+export(calcEquilibriumPop)
 export(calcSurvival)
 export(genIndexAtAge)
 export(genLogisticSelx)

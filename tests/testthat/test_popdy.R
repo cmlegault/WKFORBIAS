@@ -57,3 +57,12 @@ test_that("Bev Holt SR asymptote", {
 test_that("Bev Holt SR multiple SSB", {
   expect_equal(predBevHoltSR(100, 0, rep(5, 3)), rep(100, 3))
 })
+
+# Equilbrium Population
+test_that("Equilibrium Pop Fval NA", {
+  expect_equal(calcEquilibriumPop(100, 6, 0.2, NA), rep(NA, 6))
+})
+
+test_that("Equilibrium Pop zero mortality no plus group", {
+  expect_equal(calcEquilibriumPop(100, 6, 0, 0, plusgroupflag = FALSE), rep(100, 6))
+})
