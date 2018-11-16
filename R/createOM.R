@@ -16,6 +16,36 @@
 #' @export
 
 createOM <- function(years, nages, nindices, nyear1flag, Rflag, Mflag, Fflag, Wflag, indexflag, catcherrorflag, indexerrorflag, processerrorflag=FALSE){
-  OM <- list()
-  return(OM)
+  om <- list()
+  om$inputs <- list()
+  # save the input values
+  om$inputs$years <- years
+  om$inputs$nages <- nages
+  om$inputs$nindices <- nindices
+  om$inputs$nyear1flag <- nyear1flag
+  om$inputs$Rflag <- Rflag
+  om$inputs$Mflag <- Mflag
+  om$inputs$Fflag <- Fflag
+  om$inputs$Wflag <- Wflag
+  om$inputs$indexflag <- indexflag
+  om$inputs$catcherrorflag <- catcherrorflag
+  om$inputs$indexerrorflag <- indexerrorflag
+  om$inputs$processerrorflag <- processerrorflag
+  
+  # create blank matrices
+  nyears <- length(years)
+  blankmat <- matrix(NA, nrow=nyears, ncol=nages)
+  om$NAA <- blankmat
+  om$FAA <- blankmat
+  om$MAA <- blankmat
+  om$WAA <- blankmat
+  om$indices <- list()
+  for (ind in 1:nindices){
+    om$indices[[ind]] <- list()
+    om$indices[[ind]]$IAA <- blankmat
+  }
+  
+  return(om)
 }
+
+# example call createOM(1994:2018, 6, 3, 1, 1, 1, 1, 1, 1, 1, 1)
