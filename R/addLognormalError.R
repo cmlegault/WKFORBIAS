@@ -13,7 +13,7 @@ addLognormalError <- function(obs, sigma, biasadjustflag=FALSE, randomval=NULL){
     applied <- NA
   }else{
     if (is.null(randomval) == TRUE){
-      randomval <- rnorm(length(obs))
+      randomval <- stats::rnorm(length(obs))
     }
     applied <- obs * exp(randomval * sigma)
     if (biasadjustflag == TRUE){
