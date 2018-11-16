@@ -7,7 +7,6 @@
 #' @param randomval number of vector of predetermined random values to use, default = NULL
 #' @export
 
-
 addLognormalError <- function(obs, sigma, biasadjustflag=FALSE, randomval=NULL){
   if (any(is.na(obs)) == TRUE || any(is.na(sigma)) == TRUE){
     applied <- NA
