@@ -40,3 +40,20 @@ test_that("Cohort Survival no mortality vector, no plus group", {
 test_that("Cohort Survival no mortality vector, with plus group", {
   expect_equal(calcSurvival(rep(100, 5), 0, 0, plusgroupflag = TRUE), c(rep(100, 4), 200))
 })
+
+# Stock Recruitment - Beverton Holt
+test_that("Bev Holt SR SSB NA", {
+  expect_equal(is.na(predBevHoltSR(0.2, 0.2, NA)), TRUE)
+})
+
+test_that("Bev Holt SR SSB zero", {
+  expect_equal(predBevHoltSR(0.2, 0.2, 0), 0)
+})
+
+test_that("Bev Holt SR asymptote", {
+  expect_equal(predBevHoltSR(100, 0.1, 10000), 100, tolerance = 0.001)
+})
+
+test_that("Bev Holt SR multiple SSB", {
+  expect_equal(predBevHoltSR(100, 0, rep(5, 3)), rep(100, 3))
+})
