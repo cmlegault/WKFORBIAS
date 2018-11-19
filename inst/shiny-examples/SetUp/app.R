@@ -94,22 +94,22 @@ server <- function(input, output) {
      title(paste("Number of Indices =", input$nindices))
    })
    
-   output$Mplot <- renderPlot({
-     maa <- matrix(0.2, nrow=input$nyears, ncol=input$nages)
-     matplot(maa)
-   })
+  output$Mplot <- renderPlot({
+    maa <- matrix(0.2, nrow=input$nyears, ncol=input$nages)
+    matplot(maa)
+  })
    
-   output$Nyear1plot <- renderPlot({
-     Nyear1 <- rep(1000, input$nages)
-     zaa <- 0.5
-     for (iage in 2:input$nages){
-       Nyear1[iage] <- Nyear1[iage - 1] * exp(-zaa)
-     }
-     if (input$plusgroupflag == TRUE){
-       Nyear1[input$nages] <- Nyear1[input$nages] / (1 - exp(-zaa))
-     }
-     plot(1:input$nages, Nyear1, type='o')
-   })
+  output$Nyear1plot <- renderPlot({
+    Nyear1 <- rep(1000, input$nages)
+    zaa <- 0.5
+    for (iage in 2:input$nages){
+      Nyear1[iage] <- Nyear1[iage - 1] * exp(-zaa)
+    }
+    if (input$plusgroupflag == TRUE){
+      Nyear1[input$nages] <- Nyear1[input$nages] / (1 - exp(-zaa))
+    }
+    plot(1:input$nages, Nyear1, type='o')
+  })
 }
 
 # Run the application 
