@@ -4,8 +4,8 @@
 \alias{createOM}
 \title{Create Operating Model}
 \usage{
-createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Fflag, Wflag,
-  indexflag, catcherrorflag, indexerrorflag, processerrorflag = FALSE)
+createOM(years, nages, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
+  indexlist, catcherrorlist, indexerrorlist, processerrorlist = FALSE)
 }
 \arguments{
 \item{years}{vector of years in operating model (OM)}
@@ -14,23 +14,23 @@ createOM(years, nages, nindices, nyear1flag, Rflag, Mflag, Fflag, Wflag,
 
 \item{nindices}{number of indices}
 
-\item{nyear1flag}{N in first year option}
+\item{nyear1list}{N in first year list}
 
-\item{Rflag}{recruitment option}
+\item{Rlist}{recruitment list}
 
-\item{Mflag}{natural mortality option}
+\item{Mlist}{natural mortality list}
 
-\item{Fflag}{fishing mortality option}
+\item{Flist}{fishing mortality list}
 
-\item{Wflag}{weights at age option}
+\item{Wlist}{weights at age list}
 
-\item{indexflag}{list of index options}
+\item{indexlist}{list of index lists}
 
-\item{catcherrorflag}{option for observation errors in catch}
+\item{catcherrorlist}{list for observation errors in catch}
 
-\item{indexerrorflag}{list of options for observation errors in the indices}
+\item{indexerrorlist}{list of lists for observation errors in the indices}
 
-\item{processerrorflag}{option for process error in survival equation, default=FALSE}
+\item{processerrorlist}{list for process error in survival equation, default=FALSE}
 }
 \description{
 Define all necessary settings for creating true population values and observations with noise.
