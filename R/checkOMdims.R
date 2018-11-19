@@ -1,6 +1,6 @@
 #' Check Operating Model Dimensions
 #' 
-#' Check that all dimensions of the operating model are consistent (e.g., number of years, ages, indices).
+#' Check that all dimensions of the operating model are consistent (e.g., number of years, ages, indices). Use all(unlist(checklist) == TRUE) to see if all checks passed.
 #' @param years vector of years in operating model (OM)
 #' @param nages number of ages in OM (assumed to start at age 1)
 #' @param nindices number of indices
@@ -40,6 +40,5 @@ checkOMdims <- function(years, nages, nindices, nyear1list, Rlist, Mlist, Flist,
   return(checklist)
 }
 
-# use all(unlist(checklist) == TRUE) to see if all checks passed
-# need to add tests!
+
 

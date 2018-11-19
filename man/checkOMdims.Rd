@@ -33,5 +33,5 @@ checkOMdims(years, nages, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
 \item{processerrorlist}{list for process error in survival equation, default=FALSE}
 }
 \description{
-Check that all dimensions of the operating model are consistent (e.g., number of years, ages, indices).
+Check that all dimensions of the operating model are consistent (e.g., number of years, ages, indices). Use all(unlist(checklist) == TRUE) to see if all checks passed.
 }
