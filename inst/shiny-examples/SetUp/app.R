@@ -13,11 +13,16 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
    tabPanel("Dimensions",
      sidebarLayout(
        sidebarPanel(
-         sliderInput("years",
-                     "Years",
-                     min = 1960,
-                     max = 2050,
-                     value = c(1991, 2018)),
+         selectInput("year1",
+                     "First Year",
+                     choices = c(1900:2020),
+                     selected = 1991),
+         
+         sliderInput("nyears",
+                     "Number of Years",
+                     min = 5,
+                     max = 100,
+                     value = 20),
          
          sliderInput("nages",
                      "Number of Ages",
@@ -36,11 +41,25 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                      value = 2)
        ),
        mainPanel(
-         plotOutput("distPlot")
+         plotOutput("dimPlot")
        )
      )
    ),
    
+   tabPanel("M",
+     sidebarLayout(
+       sidebarPanel(
+         selectInput("Mopt",
+                     "Natural Mortality",
+                     choices = list("User Input", "Single Value", "Constant by Age", "More"),
+                     selected = "Single Value")
+       ),
+       mainPanel(
+         plotOutput("Mplot")
+       )
+     )
+   ),
+
    tabPanel("Nyear1",
      sidebarLayout(
        sidebarPanel(
@@ -54,18 +73,21 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
        )
      )
    )
+
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
    
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$nages + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   output$dimPlot <- renderPlot({
+     yr1 <- as.numeric(input$year1)
+     plot(1:10,1:10,xlim=c(1, input$nages), ylim=c(yr1, yr1 + input$nyears - 1), type='n', xlab="Age", ylab="Year")
+     title(paste("Number of Indices =", input$nindices))
+   })
+   
+   output$Mplot <- renderPlot({
+     maa <- matrix(0.2, nrow=input$nyears, ncol=input$nages)
+     matplot(maa)
    })
    
    output$Nyear1plot <- renderPlot({
