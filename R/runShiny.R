@@ -1,5 +1,6 @@
 #' Run the Shiny Set Up application
 #' 
+#' Use this Shiny app to set up the OM and EM for use with WKFORBIAS package.
 #' @export
 
 runShiny <- function(){
