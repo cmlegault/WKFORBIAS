@@ -28,3 +28,40 @@ test_that("calc Agg B summation", {
 test_that("calc Agg B indextime", {
   expect_equal(calcAggregateBiomass(rep(100, 3), rep(1, 3), 0, 0, 0.5), 300)
 })
+
+# checkOMdims
+test_that("check OM dimensions correct", {
+  expect_equal(all(unlist(checkOMdims(
+    years=2001:2010,
+    nages=5,
+    nindices=2,
+    nyear1list=list(values=rep(1,5)),
+    Rlist=list(values=rep(1,10)),
+    Mlist=list(values=matrix(1,10,5)),
+    Flist=list(values=matrix(1,10,5)),
+    Wlist=list(values=matrix(1,10,5)),
+    indexlist=list(index01 = list(values=matrix(1,10,5)),
+                   index02 = list(values=matrix(1,10,5))),
+    catcherrorlist=list(values=matrix(1,10,5)),
+    indexerrorlist=list(index01 = list(values=matrix(1,10,5)),
+                        index02 = list(values=matrix(1,10,5))),
+    processerrorlist=list(values=matrix(1,10,5)))) == TRUE), TRUE)
+})
+
+test_that("check OM dimensions bad", {
+  expect_equal(all(unlist(checkOMdims(
+    years=2001:2010,
+    nages=5,
+    nindices=2,
+    nyear1list=list(values=rep(1,5)),
+    Rlist=list(values=rep(1,10)),
+    Mlist=list(values=matrix(1,10,5)),
+    Flist=list(values=matrix(1,10,5)),
+    Wlist=list(values=matrix(1,10,15)),  # here is the bad one
+    indexlist=list(index01 = list(values=matrix(1,10,5)),
+                   index02 = list(values=matrix(1,10,5))),
+    catcherrorlist=list(values=matrix(1,10,5)),
+    indexerrorlist=list(index01 = list(values=matrix(1,10,5)),
+                        index02 = list(values=matrix(1,10,5))),
+    processerrorlist=list(values=matrix(1,10,5)))) == TRUE), FALSE)
+})
