@@ -43,10 +43,28 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
   tabPanel("M",
     sidebarLayout(
      sidebarPanel(
-     selectInput("Mopt",
+       selectInput("Mopt",
                  "Natural Mortality",
-                 choices = list("User Input", "Single Value", "Constant by Age", "More"),
-                 selected = "Single Value")
+                 choices = list("Single Value", "Constant over Time", "More"),
+                 selected = "Single Value"),
+       
+       sliderInput("Mbase",
+                   "Base Natural Mortality Rate",
+                   min = 0.01,
+                   max = 0.90,
+                   step = 0.01,
+                   value = 0.2),
+       
+       checkboxInput("Merrorflag",
+                     "Add variability to M matrix?",
+                     value = FALSE),
+       
+       sliderInput("Msigma",
+                   "Sigma for added error to M matrix",
+                   min = 0,
+                   max = 1,
+                   step = 0.01,
+                   value = 0)
      ),
      mainPanel(
        plotOutput("Mplot")
@@ -82,6 +100,14 @@ server <- function(input, output) {
     seq(1, input$nages)
   })
   
+  maa <- reactive({
+    mtemp <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages)
+    if(input$Merrorflag == TRUE){
+      mtemp <- addLognormalError(mtemp, input$Msigma, biasadjustflag = FALSE, randomval = NULL)
+    }
+    mtemp
+  })
+  
   output$dimPlot <- renderPlot({
     ya <- expand.grid(Age = ages(), Year = years())
     plot(ya$Age, ya$Year, xlab="Age", ylab="Year")
@@ -89,8 +115,7 @@ server <- function(input, output) {
    })
    
   output$Mplot <- renderPlot({
-    maa <- matrix(0.2, nrow=input$nyears, ncol=input$nages)
-    matplot(maa)
+    matplot(maa())
   })
    
   output$Nyear1plot <- renderPlot({
