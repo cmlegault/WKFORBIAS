@@ -100,12 +100,16 @@ server <- function(input, output) {
     seq(1, input$nages)
   })
   
-  maa <- reactive({
-    mtemp <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages)
+  Mlist <- reactive({
+    M <- list()
+    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages)
+    M$values <- M$base
+    M$Merrorflag <- input$Merrorflag
     if(input$Merrorflag == TRUE){
-      mtemp <- addLognormalError(mtemp, input$Msigma, biasadjustflag = FALSE, randomval = NULL)
+      M$noise <- addLognormalError(M$base, input$Msigma, biasadjustflag = FALSE, randomval = NULL)
+      M$values <- M$noise
     }
-    mtemp
+    M
   })
   
   output$dimPlot <- renderPlot({
@@ -115,7 +119,7 @@ server <- function(input, output) {
    })
    
   output$Mplot <- renderPlot({
-    matplot(maa())
+    matplot(Mlist()$values)
   })
    
   output$Nyear1plot <- renderPlot({
