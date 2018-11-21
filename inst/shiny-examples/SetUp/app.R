@@ -72,6 +72,33 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
     )
   ),
   
+  tabPanel("F",
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput("Fbase",
+                    "Base Fishing Mortality Rate",
+                    min = 0,
+                    max = 2,
+                    step = 0.05,
+                    value = 0.25),
+        
+        checkboxInput("Ferrorflag",
+                      "Add variability to F matrix?",
+                      value = FALSE),
+               
+        sliderInput("Fsigma",
+                    "Sigma for added error to F matrix",
+                    min = 0,
+                    max = 1,
+                    step = 0.01,
+                    value = 0)
+      ),
+      mainPanel(
+        plotOutput("Fplot")
+      )
+    )
+  ),
+  
   tabPanel("Nyear1",
     sidebarLayout(
      sidebarPanel(
@@ -112,6 +139,18 @@ server <- function(input, output) {
     M
   })
   
+  Flist <- reactive({
+    FAA <- list()
+    FAA$base <- matrix(input$Fbase, nrow=input$nyears, ncol=input$nages)
+    FAA$values <- FAA$base
+    FAA$Ferrorflag <- input$Ferrorflag
+    if(input$Ferrorflag == TRUE){
+      FAA$noise <- addLognormalError(FAA$base, input$Fsigma, biasadjustflag = FALSE, randomval = NULL)
+      FAA$values <- FAA$noise
+    }
+    FAA
+  })
+  
   output$dimPlot <- renderPlot({
     ya <- expand.grid(Age = ages(), Year = years())
     plot(ya$Age, ya$Year, xlab="Age", ylab="Year")
@@ -122,6 +161,10 @@ server <- function(input, output) {
     matplot(Mlist()$values)
   })
    
+  output$Fplot <- renderPlot({
+    matplot(Flist()$values)
+  })
+  
   output$Nyear1plot <- renderPlot({
     Nyear1 <- rep(1000, input$nages)
     zaa <- 0.5
