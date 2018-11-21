@@ -116,7 +116,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                     value = 0.3)
       ),
       mainPanel(
-        plotOutput("WAAplot")
+        plotOutput("Wplot")
       )
     )
   ),
@@ -193,6 +193,10 @@ server <- function(input, output) {
    
   output$Fplot <- renderPlot({
     matplot(Flist()$values)
+  })
+  
+  output$Wplot <- renderPlot({
+    matplot(Wlist()$values)
   })
   
   output$Nyear1plot <- renderPlot({
