@@ -99,13 +99,35 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
     )
   ),
   
+  tabPanel("WAA",
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput("Winfyear1",
+                    "Winfinity in first year",
+                    min = 1,
+                    max = 100,
+                    step = 1,
+                    value = 10),
+        sliderInput("Kyear1",
+                    "K in first year",
+                    min = 0.1,
+                    max = 0.9,
+                    step = 0.05,
+                    value = 0.3)
+      ),
+      mainPanel(
+        plotOutput("WAAplot")
+      )
+    )
+  ),
+  
   tabPanel("Nyear1",
     sidebarLayout(
      sidebarPanel(
-     selectInput("Nyear1opt",
-                 "Population numbers at age in first year",
-                 choices = list("User Input", "Equilibrium", "Equilibrium with Noise"),
-                 selected = "Equilibrium")
+       selectInput("Nyear1opt",
+                   "Population numbers at age in first year",
+                   choices = list("User Input", "Equilibrium", "Equilibrium with Noise"),
+                   selected = "Equilibrium")
      ),
      mainPanel(
        plotOutput("Nyear1plot")
@@ -149,6 +171,14 @@ server <- function(input, output) {
       FAA$values <- FAA$noise
     }
     FAA
+  })
+  
+  Wlist <- reactive({
+    W <- list()
+    WAA <- input$Winfyear1 * (1 - exp(-input$Kyear1 * seq(1, input$nages))) ^ 3
+    W$base <- matrix(rep(WAA, each=input$nyears), nrow=input$nyears, ncol=input$nages)
+    W$values <- W$base
+    W
   })
   
   output$dimPlot <- renderPlot({
