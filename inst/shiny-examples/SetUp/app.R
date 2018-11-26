@@ -31,7 +31,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
        sliderInput("nindices",
                    "Number of Indices",
                    min = 1,
-                   max = 20,
+                   max = 4,
                    value = 2)
      ),
      mainPanel(
