@@ -205,9 +205,10 @@ server <- function(input, output) {
       index[[ind]] <- list()
       if (ind == 1){
         index[[ind]]$A50 <- input$i1A50
-        index[[ind]]$selx <- 1 / (1 - exp(ages() - input$i1A50))
+        index[[ind]]$selx <- 1 / (1 + exp(-1 * (ages() - input$i1A50)))
       }
     }
+    index
   })
   
   output$dimPlot <- renderPlot({
