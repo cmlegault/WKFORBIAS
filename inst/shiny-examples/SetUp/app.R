@@ -121,20 +121,20 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
     )
   ),
   
-  tabPanel("Indices",
-    sidebarLayout(
-      sidebarPanel(
-        lapply(1:2, function(i){
-          sliderInput(paste0("A50", i),
-                      paste0("Index ", i, " A50"),
+  navbarMenu("Indices",
+    tabPanel("Index 1",
+      sidebarLayout(
+        sidebarPanel(
+          sliderInput("i1A50",
+                      "Index 1 A50",
                       min = 0,
                       max = 10,
                       step = 0.1,
                       value = 4)
-        })
-      ),
-      mainPanel(
-        plotOutput("indexplot")
+        ),
+        mainPanel(
+          plotOutput("indexplot")
+        )
       )
     )
   ),
@@ -202,9 +202,11 @@ server <- function(input, output) {
   indexlist <- reactive({
     index <- list()
     for (ind in 1:input$nindices){
-      thisA50 <- input[[paste0("A50", ind)]]
-      index[[ind]]$A50 <- thisA50
-      index[[ind]]$values <- 1 / (1 - exp(1:input$nages - thisA50))
+      index[[ind]] <- list()
+      if (ind == 1){
+        index[[ind]]$A50 <- input$i1A50
+        index[[ind]]$selx <- 1 / (1 - exp(ages() - input$i1A50))
+      }
     }
   })
   
@@ -227,7 +229,7 @@ server <- function(input, output) {
   })
   
   output$indexplot <- renderPlot({
-    matplot(indexlist()$values)
+    plot(ages(), indexlist()[[1]]$selx)
   })
   
   output$Nyear1plot <- renderPlot({
