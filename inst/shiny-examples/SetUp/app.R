@@ -137,7 +137,14 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                       min = -10,
                       max = 10,
                       step = 0.1,
-                      value = 1)
+                      value = 1),
+          
+          sliderInput("i1q",
+                      "Index 1 catchability",
+                      min = 0.01,
+                      max = 1,
+                      step = 0.01,
+                      value = 0.3)
         ),
         mainPanel(
           plotOutput("indexplot")
@@ -213,6 +220,7 @@ server <- function(input, output) {
       if (ind == 1){
         index[[ind]]$A50 <- input$i1A50
         index[[ind]]$selx <- 1 / (1 + exp(-input$i1slope * (ages() - input$i1A50)))
+        index[[ind]]$q <- input$i1q
       }
     }
     index
