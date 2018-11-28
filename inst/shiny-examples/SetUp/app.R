@@ -128,7 +128,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
           sliderInput("i1A50",
                       "Index 1 A50",
                       min = 0,
-                      max = 10,
+                      max = 50,
                       step = 0.1,
                       value = 4),
           
@@ -138,6 +138,20 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                       max = 10,
                       step = 0.1,
                       value = 1),
+          
+          sliderInput("i1A502",
+                      "Index 1 A50 2",
+                      min = 0,
+                      max = 50,
+                      step = 0.1,
+                      value = 10),
+          
+          sliderInput("i1slope2",
+                      "Index 1 slope 2",
+                      min = -10,
+                      max = 10,
+                      step = 0.1,
+                      value = 0),
           
           sliderInput("i1q",
                       "Index 1 catchability",
@@ -219,7 +233,9 @@ server <- function(input, output) {
       index[[ind]] <- list()
       if (ind == 1){
         index[[ind]]$A50 <- input$i1A50
-        index[[ind]]$selx <- 1 / (1 + exp(-input$i1slope * (ages() - input$i1A50)))
+        leftc <- 1 / (1 + exp(-input$i1slope * (ages() - input$i1A50)))
+        rtc <- 1 / (1 + exp(-input$i1slope2 * (ages() - input$i1A502)))
+        index[[ind]]$selx <- leftc * rtc
         index[[ind]]$q <- input$i1q
       }
     }
