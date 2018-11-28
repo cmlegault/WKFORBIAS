@@ -130,7 +130,14 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                       min = 0,
                       max = 10,
                       step = 0.1,
-                      value = 4)
+                      value = 4),
+          
+          sliderInput("i1slope",
+                      "Index 1 slope",
+                      min = -10,
+                      max = 10,
+                      step = 0.1,
+                      value = 1)
         ),
         mainPanel(
           plotOutput("indexplot")
@@ -205,7 +212,7 @@ server <- function(input, output) {
       index[[ind]] <- list()
       if (ind == 1){
         index[[ind]]$A50 <- input$i1A50
-        index[[ind]]$selx <- 1 / (1 + exp(-1 * (ages() - input$i1A50)))
+        index[[ind]]$selx <- 1 / (1 + exp(-input$i1slope * (ages() - input$i1A50)))
       }
     }
     index
