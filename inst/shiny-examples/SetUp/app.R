@@ -179,8 +179,41 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
        plotOutput("Nyear1plot")
      )
     )
-  )
+  ),
   
+  tabPanel("Recruits",
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput("R0",
+                    "Unexploited recruitment (millions)",
+                    min = 1,
+                    max = 100,
+                    step = 1,
+                    value = 14),
+      
+        sliderInput("steepness",
+                    "Steepness of Bev-Holt curve",
+                    min = 0.21,
+                    max = 1,
+                    step = 0.01,
+                    value = 0.7),
+        
+        sliderInput("Rsigma",
+                    "Sigma for error about SR curve",
+                    min = 0,
+                    max = 2,
+                    step = 0.1,
+                    value = 0),
+        
+        checkboxInput("Rsigmabiasflag",
+                      "Bias adjust recruitment values?",
+                      value = FALSE)
+      ),
+      mainPanel(
+        plotOutput("Recruitmentplot")
+      )
+    )
+  )
 )
 
 # Define server logic required to draw a histogram
@@ -242,6 +275,22 @@ server <- function(input, output) {
     index
   })
   
+  Rlist <- reactive({
+    r <- list()
+    r$SRcurve <- "BevHolt"
+    r$BHR0 <- input$R0
+    r$BHsteepness <- input$steepness
+    Mvec <- Mlist()$values[1,]  # use first year for calculations
+    Wvec <- Wlist()$values[1,]  # use first year for calculations
+    N0pr <- calcEquilibriumPop(1, input$nages, Mvec, 0)
+    SSB0pr <- calcAggregateBiomass(N0pr, Wvec, Mvec, 0, 0)  # assume SSB at start of year for now
+    r$BHSSB0 <- SSB0pr * input$R0
+    denom <- 5 * input$steepness - 1
+    r$BHalpha <- 4 * input$steepness * input$R0 / denom
+    r$BHbeta <- r$BHSSB0 * (1 - input$steepness) / denom
+    r
+  })
+  
   output$dimPlot <- renderPlot({
     ya <- expand.grid(Age = ages(), Year = years())
     plot(ya$Age, ya$Year, xlab="Age", ylab="Year")
@@ -274,6 +323,14 @@ server <- function(input, output) {
       Nyear1[input$nages] <- Nyear1[input$nages] / (1 - exp(-zaa))
     }
     plot(1:input$nages, Nyear1, type='o')
+  })
+  
+  output$Recruitmentplot <- renderPlot({
+    ssb <- seq(0, Rlist()$BHSSB0, length.out = 400)
+    r <- Rlist()$BHalpha * ssb / (Rlist()$BHbeta + ssb)
+    rn <- addLognormalError(r, input$Rsigma, input$Rsigmabiasflag)
+    plot(ssb, rn, xlab="SSB", ylab="Recruits (millions)")
+     lines(ssb, r)
   })
 }
 
