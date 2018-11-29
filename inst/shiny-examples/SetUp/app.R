@@ -167,20 +167,6 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
     )
   ),
   
-  tabPanel("Nyear1",
-    sidebarLayout(
-     sidebarPanel(
-       selectInput("Nyear1opt",
-                   "Population numbers at age in first year",
-                   choices = list("User Input", "Equilibrium", "Equilibrium with Noise"),
-                   selected = "Equilibrium")
-     ),
-     mainPanel(
-       plotOutput("Nyear1plot")
-     )
-    )
-  ),
-  
   tabPanel("Recruits",
     sidebarLayout(
       sidebarPanel(
@@ -210,7 +196,8 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                       value = FALSE)
       ),
       mainPanel(
-        plotOutput("Recruitmentplot")
+        plotOutput("Recruitmentplot"),
+        plotOutput("Nyear1plot")
       )
     )
   )
@@ -314,15 +301,20 @@ server <- function(input, output) {
   })
   
   output$Nyear1plot <- renderPlot({
-    Nyear1 <- rep(1000, input$nages)
-    zaa <- 0.5
-    for (iage in 2:input$nages){
-      Nyear1[iage] <- Nyear1[iage - 1] * exp(-zaa)
-    }
+    Mvec <- Mlist()$values[1,]
+    Fvec <- Flist()$values[1,]
+    Wvec <- Wlist()$values[1,]
+    NpR <- calcEquilibriumPop(1, input$nages, Mvec, Fvec, input$plusgroupflag)
+    SSBpR <- calcAggregateBiomass(NpR, Wvec) # assume SSB at start of year for now
+    SSB1 <- Rlist()$BHalpha * SSBpR - Rlist()$BHbeta
+    R1 <- Rlist()$BHalpha * SSB1 / (Rlist()$BHbeta + SSB1)
+    Nyear1 <- calcEquilibriumPop(R1, input$nages, Mvec, Fvec, input$plusgroupflag)
+    Nyear1noise <- addLognormalError(Nyear1, input$Rsigma, input$Rsigmabiasflag)
     if (input$plusgroupflag == TRUE){
-      Nyear1[input$nages] <- Nyear1[input$nages] / (1 - exp(-zaa))
+      Nyear1noise[input$nages] <- Nyear1[input$nages] # do not apply noise to plus group
     }
-    plot(1:input$nages, Nyear1, type='o')
+    plot(ages(), Nyear1noise, xlab="Age", ylab="Population N in Year 1", ylim=c(0,max(c(Nyear1, Nyear1noise))))
+     lines(ages(), Nyear1)
   })
   
   output$Recruitmentplot <- renderPlot({
