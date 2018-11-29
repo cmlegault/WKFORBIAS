@@ -235,7 +235,7 @@ server <- function(input, output) {
         index[[ind]]$A50 <- input$i1A50
         leftc <- 1 / (1 + exp(-input$i1slope * (ages() - input$i1A50)))
         rtc <- 1 / (1 + exp(-input$i1slope2 * (ages() - input$i1A502)))
-        index[[ind]]$selx <- leftc * rtc
+        index[[ind]]$selx <- leftc * rtc / max(leftc * rtc)
         index[[ind]]$q <- input$i1q
       }
     }
@@ -261,7 +261,7 @@ server <- function(input, output) {
   })
   
   output$indexplot <- renderPlot({
-    plot(ages(), indexlist()[[1]]$selx)
+    plot(ages(), indexlist()[[1]]$selx, ylim=c(0,1), xlab="Age", ylab="Selectivity")
   })
   
   output$Nyear1plot <- renderPlot({
