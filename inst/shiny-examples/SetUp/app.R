@@ -278,6 +278,13 @@ server <- function(input, output) {
     r
   })
   
+  Ny1list <- reactive({
+    Ny1 <- list()
+    Ny1$type <- "Equilibrium"
+    Ny1$R <- "BevHolt"
+    Ny1
+  })
+  
   output$dimPlot <- renderPlot({
     ya <- expand.grid(Age = ages(), Year = years())
     plot(ya$Age, ya$Year, xlab="Age", ylab="Year")
