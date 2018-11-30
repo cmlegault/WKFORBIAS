@@ -330,6 +330,7 @@ server <- function(input, output) {
     rn <- addLognormalError(r, input$Rsigma, input$Rsigmabiasflag)
     plot(ssb, rn, xlab="SSB", ylab="Recruits (millions)")
      lines(ssb, r)
+     title(main = "Demonstration of recruitment variability")
   })
 }
 
