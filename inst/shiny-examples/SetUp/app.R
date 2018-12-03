@@ -217,7 +217,7 @@ server <- function(input, output) {
   
   Mlist <- reactive({
     M <- list()
-    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages)
+    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages, dimnames=list(years()))
     M$values <- M$base
     M$Merrorflag <- input$Merrorflag
     if(input$Merrorflag == TRUE){
@@ -292,7 +292,7 @@ server <- function(input, output) {
    })
    
   output$Mplot <- renderPlot({
-    matplot(Mlist()$values)
+    matplot(rownames(Mlist()$values), Mlist()$values, xlab="Year", ylab="M", ylim=c(0,max(Mlist()$values)))
   })
    
   output$Fplot <- renderPlot({
