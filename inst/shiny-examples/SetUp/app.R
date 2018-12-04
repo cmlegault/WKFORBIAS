@@ -45,7 +45,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
      sidebarPanel(
        selectInput("Mopt",
                  "Natural Mortality",
-                 choices = list("Single Value", "Constant over Time", "More"),
+                 choices = list("Single Value", "Constant over Time", "Matrix"),
                  selected = "Single Value"),
        
        sliderInput("Mbase",
@@ -75,12 +75,58 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
   tabPanel("F",
     sidebarLayout(
       sidebarPanel(
-        sliderInput("Fbase",
-                    "Base Fishing Mortality Rate",
-                    min = 0,
-                    max = 2,
-                    step = 0.05,
-                    value = 0.25),
+        sliderInput("Fyears",
+                    "Years for Setting F (in addition to first and last year)",
+                    min = 1,
+                    max = 10,
+                    step = 1,
+                    value = c(4,5)),
+        
+        sliderInput("Fages",
+                    "Ages for Setting F (in addition to first and last age)",
+                    min = 1,
+                    max = 10,
+                    step = 1,
+                    value = c(2,3)),
+        
+        fluidRow(
+          column(3,
+            sliderInput("Fy1a1", "Fy1a1",
+                        min = 0, max = 1, step = 0.1, value = 0.2),
+            sliderInput("Fy1a2", "Fy1a2",
+                        min = 0, max = 1, step = 0.1, value = 0.3),
+            sliderInput("Fy1a3", "Fy1a3",
+                        min = 0, max = 1, step = 0.1, value = 0.3),
+            sliderInput("Fy1a4", "Fy1a4",
+                        min = 0, max = 1, step = 0.1, value = 0.3)),
+          column(3,
+            sliderInput("Fy2a1", "Fy2a1",
+                        min = 0, max = 1, step = 0.1, value = 0.2),
+            sliderInput("Fy2a2", "Fy2a2",
+                        min = 0, max = 1, step = 0.1, value = 0.3),
+            sliderInput("Fy2a3", "Fy2a3",
+                        min = 0, max = 1, step = 0.1, value = 0.3),
+            sliderInput("Fy2a4", "Fy2a4",
+                        min = 0, max = 1, step = 0.1, value = 0.3)),
+          column(3,
+            sliderInput("Fy3a1", "Fy3a1",
+                        min = 0, max = 1, step = 0.1, value = 0.4),
+            sliderInput("Fy3a2", "Fy3a2",
+                        min = 0, max = 1, step = 0.1, value = 0.5),
+            sliderInput("Fy3a3", "Fy3a3",
+                        min = 0, max = 1, step = 0.1, value = 0.5),
+            sliderInput("Fy3a4", "Fy3a4",
+                        min = 0, max = 1, step = 0.1, value = 0.5)),
+          column(3,
+            sliderInput("Fy4a1", "Fy4a1",
+                        min = 0, max = 1, step = 0.1, value = 0.5),
+            sliderInput("Fy4a2", "Fy4a2",
+                        min = 0, max = 1, step = 0.1, value = 0.7),
+            sliderInput("Fy4a3", "Fy4a3",
+                        min = 0, max = 1, step = 0.1, value = 0.9),
+            sliderInput("Fy4a4", "Fy4a4",
+                        min = 0, max = 1, step = 0.1, value = 0.5))
+        ),
         
         checkboxInput("Ferrorflag",
                       "Add variability to F matrix?",
@@ -204,8 +250,22 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
 )
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
-     
+server <- function(input, output, session) {
+  
+  observe({
+    year1 <- as.numeric(input$year1)
+    nyears <- input$nyears
+    year2 <- year1 + nyears - 1
+    updateSliderInput(session, "Fyears", value = c((year1 + 1), (year2 - 1)),
+                      min = year1, max = year2, step = 0.5)
+  })
+  
+  observe({
+    nages <- input$nages
+    updateSliderInput(session, "Fages", value = c(2, nages - 1),
+                      min = 1, max = nages, step = 0.5)
+  })
+  
   years <- reactive({
     yr1 <- as.numeric(input$year1)
     seq(yr1, yr1 + input$nyears - 1)
