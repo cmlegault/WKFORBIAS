@@ -131,6 +131,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                     value = 0)
       ),
       mainPanel(
+        tableOutput("Ftable"),
         plotOutput("Fplot")
       )
     )
@@ -280,13 +281,31 @@ server <- function(input, output, session) {
   
   Flist <- reactive({
     FAA <- list()
-    FAA$base <- matrix(input$Fbase, nrow=input$nyears, ncol=input$nages)
-    FAA$values <- FAA$base
-    FAA$Ferrorflag <- input$Ferrorflag
-    if(input$Ferrorflag == TRUE){
-      FAA$noise <- addLognormalError(FAA$base, input$Fsigma, biasadjustflag = FALSE, randomval = NULL)
-      FAA$values <- FAA$noise
-    }
+    # FAA$base <- matrix(input$Fbase, nrow=input$nyears, ncol=input$nages)
+    # FAA$values <- FAA$base
+    # FAA$Ferrorflag <- input$Ferrorflag
+    # if(input$Ferrorflag == TRUE){
+    #   FAA$noise <- addLognormalError(FAA$base, input$Fsigma, biasadjustflag = FALSE, randomval = NULL)
+    #   FAA$values <- FAA$noise
+    # }
+    yr1 <- as.numeric(input$year1)
+    yr2 <- input$Fyears[1]
+    yr3 <- input$Fyears[2]
+    yr4 <- input$nyears + yr1 - 1
+    a1 <- 1
+    a2 <- input$Fages
+    a3 <- input$nages
+    pts <- data.frame(year = c(rep(yr1, 3), rep(yr2, 3), rep(yr3, 3), rep(yr4,3)),
+                      age = c(rep(c(a1, a2, a3), 4)),
+                      Fval = c(input$Fy1a1, input$Fy1a2, input$Fy1a3,
+                               input$Fy2a1, input$Fy2a2, input$Fy2a3,
+                               input$Fy3a1, input$Fy3a2, input$Fy3a3,
+                               input$Fy4a1, input$Fy4a2, input$Fy4a3))
+    myloess = loess(Fval ~ age * year, data = pts)
+    mygrid <- expand.grid(year = years(), age = ages())
+    # need to add check for F < 0
+    Fgrid <- predict(myloess, newdata = mygrid)
+    FAA$Fgrid <- Fgrid
     FAA
   })
   
@@ -346,8 +365,13 @@ server <- function(input, output, session) {
     matplot(rownames(Mlist()$values), Mlist()$values, xlab="Year", ylab="M", ylim=c(0,max(Mlist()$values)))
   })
    
+  output$Ftable <- renderTable({
+    Flist()$Fgrid
+  })
+  
   output$Fplot <- renderPlot({
-    matplot(Flist()$values)
+    #matplot(Flist()$values)
+    persp(Flist()$Fgrid)
   })
   
   output$Wplot <- renderPlot({
