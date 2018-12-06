@@ -366,7 +366,7 @@ server <- function(input, output, session) {
   })
    
   output$Ftable <- renderTable({
-    Flist()$Fgrid
+    head(Flist()$Fgrid)
   })
   
   output$Fplot <- renderPlot({
