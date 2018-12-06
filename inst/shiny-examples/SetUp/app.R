@@ -132,7 +132,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
       ),
       mainPanel(
         tableOutput("Ftable"),
-        plotOutput("Fplot")
+        plotlyOutput("Fplot")
       )
     )
   ),
@@ -301,11 +301,15 @@ server <- function(input, output, session) {
                                input$Fy2a1, input$Fy2a2, input$Fy2a3,
                                input$Fy3a1, input$Fy3a2, input$Fy3a3,
                                input$Fy4a1, input$Fy4a2, input$Fy4a3))
-    myloess = loess(Fval ~ age * year, data = pts)
+    myloess <- loess(Fval ~ age * year, data = pts)
     mygrid <- expand.grid(year = years(), age = ages())
     # need to add check for F < 0
     Fgrid <- predict(myloess, newdata = mygrid)
     FAA$Fgrid <- Fgrid
+    df <- data.frame(year = mygrid$year,
+                     age = mygrid$age,
+                     Fval = as.numeric(Fgrid))
+    FAA$df <- df
     FAA
   })
   
@@ -366,12 +370,17 @@ server <- function(input, output, session) {
   })
    
   output$Ftable <- renderTable({
-    head(Flist()$Fgrid)
+    head(Flist()$df)
   })
   
-  output$Fplot <- renderPlot({
+  output$Fplot <- renderPlotly({
     #matplot(Flist()$values)
-    persp(Flist()$Fgrid)
+    #persp(Flist()$Fgrid)
+    #year <- Flist()$df$year
+    #age <- Flist()$df$age
+    #Fval <- Flist()$df$Fval
+    plot_ly(x = ages(), y = years(), z = Flist()$Fgrid) %>%
+      add_surface()
   })
   
   output$Wplot <- renderPlot({
