@@ -132,7 +132,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
       ),
       mainPanel(
         tableOutput("Ftable"),
-        plotlyOutput("Fplot")
+        plotOutput("Fplot")
       )
     )
   ),
@@ -249,13 +249,13 @@ server <- function(input, output, session) {
     nyears <- input$nyears
     year2 <- year1 + nyears - 1
     updateSliderInput(session, "Fyears", value = c((year1 + 1), (year2 - 1)),
-                      min = year1, max = year2, step = 0.5)
+                      min = year1, max = year2, step = 1)
   })
   
   observe({
     nages <- input$nages
     updateSliderInput(session, "Fages", value = floor(nages/2),
-                      min = 1, max = nages, step = 0.5)
+                      min = 1, max = nages, step = 1)
   })
   
   years <- reactive({
@@ -281,35 +281,67 @@ server <- function(input, output, session) {
   
   Flist <- reactive({
     FAA <- list()
-    # FAA$base <- matrix(input$Fbase, nrow=input$nyears, ncol=input$nages)
-    # FAA$values <- FAA$base
-    # FAA$Ferrorflag <- input$Ferrorflag
-    # if(input$Ferrorflag == TRUE){
-    #   FAA$noise <- addLognormalError(FAA$base, input$Fsigma, biasadjustflag = FALSE, randomval = NULL)
-    #   FAA$values <- FAA$noise
-    # }
-    yr1 <- as.numeric(input$year1)
-    yr2 <- input$Fyears[1]
-    yr3 <- input$Fyears[2]
-    yr4 <- input$nyears + yr1 - 1
+    year1 <- as.numeric(input$year1)
+    nyears <- input$nyears
+    nages <- input$nages
+    y1 <- 1
+    y2 <- input$Fyears[1] - year1 + 1
+    y3 <- input$Fyears[2] - year1 + 1
+    y4 <- nyears
     a1 <- 1
     a2 <- input$Fages
-    a3 <- input$nages
-    pts <- data.frame(year = c(rep(yr1, 3), rep(yr2, 3), rep(yr3, 3), rep(yr4,3)),
-                      age = c(rep(c(a1, a2, a3), 4)),
-                      Fval = c(input$Fy1a1, input$Fy1a2, input$Fy1a3,
-                               input$Fy2a1, input$Fy2a2, input$Fy2a3,
-                               input$Fy3a1, input$Fy3a2, input$Fy3a3,
-                               input$Fy4a1, input$Fy4a2, input$Fy4a3))
-    myloess <- loess(Fval ~ age * year, data = pts)
-    mygrid <- expand.grid(year = years(), age = ages())
-    # need to add check for F < 0
-    Fgrid <- predict(myloess, newdata = mygrid)
-    FAA$Fgrid <- Fgrid
-    df <- data.frame(year = mygrid$year,
-                     age = mygrid$age,
-                     Fval = as.numeric(Fgrid))
-    FAA$df <- df
+    a3 <- nages
+    Fg <- matrix(NA, nrow = nyears, ncol = nages)
+    Fg[y1,a1] <- input$Fy1a1
+    Fg[y1,a2] <- input$Fy1a2
+    Fg[y1,a3] <- input$Fy1a3
+    Fg[y2,a1] <- input$Fy2a1
+    Fg[y2,a2] <- input$Fy2a2
+    Fg[y2,a3] <- input$Fy2a3
+    Fg[y3,a1] <- input$Fy3a1
+    Fg[y3,a2] <- input$Fy3a2
+    Fg[y3,a3] <- input$Fy3a3
+    Fg[y4,a1] <- input$Fy4a1
+    Fg[y4,a2] <- input$Fy4a2
+    Fg[y4,a3] <- input$Fy4a3
+    if (a2 > (a1+1)){
+      for (a in (a1+1):(a2-1)){
+        Fg[y1,a] <- Fg[y1,a1] + (a - a1) * (Fg[y1,a2] - Fg[y1,a1]) / (a2 - a1)
+        Fg[y2,a] <- Fg[y2,a1] + (a - a1) * (Fg[y2,a2] - Fg[y2,a1]) / (a2 - a1)
+        Fg[y3,a] <- Fg[y3,a1] + (a - a1) * (Fg[y3,a2] - Fg[y3,a1]) / (a2 - a1)
+        Fg[y4,a] <- Fg[y4,a1] + (a - a1) * (Fg[y4,a2] - Fg[y4,a1]) / (a2 - a1)
+      }
+    }
+    if (a3 > (a2+1)){
+      for (a in (a2+1):(a3-1)){
+        Fg[y1,a] <- Fg[y1,a2] + (a - a2) * (Fg[y1,a3] - Fg[y1,a2]) / (a3 - a2)
+        Fg[y2,a] <- Fg[y2,a2] + (a - a2) * (Fg[y2,a3] - Fg[y2,a2]) / (a3 - a2)
+        Fg[y3,a] <- Fg[y3,a2] + (a - a2) * (Fg[y3,a3] - Fg[y3,a2]) / (a3 - a2)
+        Fg[y4,a] <- Fg[y4,a2] + (a - a2) * (Fg[y4,a3] - Fg[y4,a2]) / (a3 - a2)
+      }
+    }
+    if (y2 > (y1+1)){
+      for (y in (y1+1):(y2-1)){
+        for (a in 1:nages){
+          Fg[y,a] <- Fg[y1,a] + (y - y1) * (Fg[y2,a] - Fg[y1,a]) / (y2 - y1)
+        }
+      }
+    }
+    if (y3 > (y2+1)){
+      for (y in (y2+1):(y3-1)){
+        for (a in 1:nages){
+          Fg[y,a] <- Fg[y2,a] + (y - y2) * (Fg[y3,a] - Fg[y2,a]) / (y3 - y2)
+        }
+      }
+    }
+    if (y4 > (y3+1)){
+      for (y in (y3+1):(y4-1)){
+        for (a in 1:nages){
+          Fg[y,a] <- Fg[y3,a] + (y - y3) * (Fg[y4,a] - Fg[y3,a]) / (y4 - y3)
+        }
+      }
+    }
+    FAA$Fgrid <- Fg
     FAA
   })
   
@@ -370,17 +402,17 @@ server <- function(input, output, session) {
   })
    
   output$Ftable <- renderTable({
-    head(Flist()$df)
+    Flist()$Fgrid
   })
   
-  output$Fplot <- renderPlotly({
+  output$Fplot <- renderPlot({
     #matplot(Flist()$values)
-    #persp(Flist()$Fgrid)
+    persp(Flist()$Fgrid)
     #year <- Flist()$df$year
     #age <- Flist()$df$age
     #Fval <- Flist()$df$Fval
-    plot_ly(x = ages(), y = years(), z = Flist()$Fgrid) %>%
-      add_surface()
+    #plot_ly(x = ages(), y = years(), z = Flist()$Fgrid) %>%
+    #  add_surface()
   })
   
   output$Wplot <- renderPlot({
