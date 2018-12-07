@@ -2,6 +2,22 @@
 # To run it, use the command runShiny() in R. 
 # Assumes shiny package is installed.
 
+####################################################################################
+# functions (move to regular R code???)
+# plotdf assumes 3 column dataframe, e.g., year, age, Fval and plots multiple ways
+plotdf <- function(df){
+  x <- names(df)[1]
+  y <- names(df)[2]
+  z <- names(df)[3]
+  p <- ggplot(df, aes_string(x=x, y=z, group=y, color=y)) +
+    geom_line() +
+    ggtitle(z) +
+    theme_bw()
+  print(p)
+}
+
+####################################################################################
+# Shiny user interface
 ui <- navbarPage(strong("WKFORBIAS Set Up"),
      
   tabPanel("Dimensions",
@@ -415,7 +431,8 @@ server <- function(input, output, session) {
   })
   
   output$Fplot <- renderPlot({
-    persp(Flist()$Fgrid)
+    #persp(Flist()$Fgrid)
+    plotdf(Flist()$Fdf)
   })
   
   output$Wplot <- renderPlot({
