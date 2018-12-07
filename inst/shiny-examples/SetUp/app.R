@@ -248,7 +248,8 @@ server <- function(input, output, session) {
     year1 <- as.numeric(input$year1)
     nyears <- input$nyears
     year2 <- year1 + nyears - 1
-    updateSliderInput(session, "Fyears", value = c((year1 + 1), (year2 - 1)),
+    updateSliderInput(session, "Fyears", 
+                      value = c((year1 + floor(nyears / 3)), (year1 + ceiling(2 * nyears / 3))),
                       min = year1, max = year2, step = 1)
   })
   
