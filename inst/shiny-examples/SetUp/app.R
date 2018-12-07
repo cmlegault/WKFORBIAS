@@ -147,7 +147,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                     value = 0)
       ),
       mainPanel(
-        tableOutput("Ftable"),
+        #tableOutput("Ftable"),
         plotOutput("Fplot")
       )
     )
