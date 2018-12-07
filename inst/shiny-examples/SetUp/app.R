@@ -415,13 +415,7 @@ server <- function(input, output, session) {
   })
   
   output$Fplot <- renderPlot({
-    #matplot(Flist()$values)
     persp(Flist()$Fgrid)
-    #year <- Flist()$df$year
-    #age <- Flist()$df$age
-    #Fval <- Flist()$df$Fval
-    #plot_ly(x = ages(), y = years(), z = Flist()$Fgrid) %>%
-    #  add_surface()
   })
   
   output$Wplot <- renderPlot({
