@@ -343,6 +343,14 @@ server <- function(input, output, session) {
       }
     }
     FAA$Fgrid <- Fg
+    df <- data.frame()
+    for (y in 1:nyears){
+      thisdf <- data.frame(year = as.integer(y + year1 - 1),
+                           age = 1:nages,
+                           Fval = Fg[y,])
+      df <- rbind(df, thisdf)
+    }
+    FAA$Fdf <- df
     FAA
   })
   
@@ -403,7 +411,7 @@ server <- function(input, output, session) {
   })
    
   output$Ftable <- renderTable({
-    Flist()$Fgrid
+    head(Flist()$Fdf, n=20)
   })
   
   output$Fplot <- renderPlot({
