@@ -118,7 +118,8 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                         min = 0, max = 1, step = 0.1, value = 0.5),
             sliderInput("Fy4a3", "Fy4a3",
                         min = 0, max = 1, step = 0.1, value = 0.2))
-        ),
+        )
+      ),
       mainPanel(
         tableOutput("Ftable")
       )
