@@ -2,21 +2,6 @@
 # To run it, use the command runShiny() in R. 
 # Assumes shiny package is installed.
 
-####################################################################################
-# functions (move to regular R code???)
-# plotdf assumes 3 column dataframe, e.g., year, age, Fval and plots multiple ways
-plotdf <- function(df){
-  x <- names(df)[1]
-  y <- names(df)[2]
-  z <- names(df)[3]
-  p <- ggplot(df, aes_string(x=x, y=z, group=y, color=y)) +
-    geom_line() +
-    ggtitle(z) +
-    theme_bw()
-  print(p)
-}
-
-####################################################################################
 # Shiny user interface
 ui <- navbarPage(strong("WKFORBIAS Set Up"),
      
@@ -134,21 +119,8 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
             sliderInput("Fy4a3", "Fy4a3",
                         min = 0, max = 1, step = 0.1, value = 0.2))
         ),
-        
-        checkboxInput("Ferrorflag",
-                      "Add variability to F matrix?",
-                      value = FALSE),
-               
-        sliderInput("Fsigma",
-                    "Sigma for added error to F matrix",
-                    min = 0,
-                    max = 1,
-                    step = 0.01,
-                    value = 0)
-      ),
       mainPanel(
-        #tableOutput("Ftable"),
-        plotOutput("Fplot")
+        tableOutput("Ftable")
       )
     )
   ),
@@ -427,12 +399,7 @@ server <- function(input, output, session) {
   })
    
   output$Ftable <- renderTable({
-    head(Flist()$Fdf, n=20)
-  })
-  
-  output$Fplot <- renderPlot({
-    #persp(Flist()$Fgrid)
-    plotdf(Flist()$Fdf)
+    Flist()$Fgrid
   })
   
   output$Wplot <- renderPlot({
