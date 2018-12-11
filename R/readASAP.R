@@ -20,9 +20,9 @@ readASAP <- function(asap.name, wd){
   # create operating model list
   OM <- list()
   OM$source <- "readASAP"
-  OM$readASAP <- list()
-  OM$readASAP$asap.name <- asap.name
-  OM$readASAP$wd <- wd
+  OM$sourcedetails <- list()
+  OM$sourcedetails$asap.name <- asap.name
+  OM$sourcedetails$wd <- wd
   
   OM$years <- seq(asap$parms$styr, asap$parms$endyr)
   OM$nyears <- length(OM$years)
@@ -77,4 +77,5 @@ readASAP <- function(asap.name, wd){
 }
 
 # example call
-# readASAP("simple", "C:\\Users\\chris.legault\\Desktop\\testplots")
+# myom <- readASAP("simple", "C:\\Users\\chris.legault\\Desktop\\testplots")
+# names(myom)
