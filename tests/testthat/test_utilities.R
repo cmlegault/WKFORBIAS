@@ -65,3 +65,8 @@ test_that("check OM dimensions bad", {
                         index02 = list(values=matrix(1,10,5))),
     processerrorlist=list(values=matrix(1,10,5)))) == TRUE), FALSE)
 })
+
+# readASAP
+test_that("check readASAP file.exists", {
+  expect_equal(readASAP(NULL, NULL), "Missing ASAP file")
+})
