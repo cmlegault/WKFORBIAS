@@ -40,7 +40,8 @@ fillTrueOM <- function(om){
   
   # fill in NAA matrix using F and M matrices
   for (iyear in 1:(om$nyears-1)){
-    om$NAA[(iyear+1), ] <- calcSurvival(om$NAA[iyear, ], om$MAA[iyear, ], om$FAA[iyear], TRUE)
+    survs <- calcSurvival(om$NAA[iyear, ], om$MAA[iyear, ], om$FAA[iyear], TRUE)
+    om$NAA[(iyear+1), 2:(om$nages)] <- survs[-(om$nages - 1)]
   }
   
   return(om)  
