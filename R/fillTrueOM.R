@@ -30,6 +30,18 @@ fillTrueOM <- function(om){
     om$WAA <- om$Wlist$values
   }
   
+  if (om$nyear1list$type == "constant"){
+    om$NAA[1, ] <- om$nyear1list$values
+  }
+  
+  if (om$Rlist$type == "constant"){
+    om$NAA[, 1] <- om$Rlist$values
+  }
+  
+  # fill in NAA matrix using F and M matrices
+  for (iyear in 1:(om$nyears-1)){
+    om$NAA[(iyear+1), ] <- calcSurvival(om$NAA[iyear, ], om$MAA[iyear, ], om$FAA[iyear], TRUE)
+  }
   
   return(om)  
 }
