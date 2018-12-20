@@ -340,6 +340,7 @@ server <- function(input, output, session) {
       df <- rbind(df, thisdf)
     }
     FAA$Fdf <- df
+    FAA$values <- Fg
     FAA
   })
   
