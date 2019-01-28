@@ -44,6 +44,10 @@ fillTrueOM <- function(om){
     om$NAA[(iyear+1), 2:(om$nages)] <- survs[-(om$nages - 1)]
   }
   
+  # calculate catch matrix using N, F, and M matrices
+  zaa <- om$MAA +om$FAA
+  om$CAA <- om$NAA * om$FAA * (1 - exp(-zaa)) / zaa
+  
   return(om)  
 }
 
