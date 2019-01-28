@@ -45,8 +45,7 @@ fillTrueOM <- function(om){
   }
   
   # calculate catch matrix using N, F, and M matrices
-  zaa <- om$MAA +om$FAA
-  om$CAA <- om$NAA * om$FAA * (1 - exp(-zaa)) / zaa
+  om$CAA <- calcCatch(om$NAA, om$MAA, on$FAA)
   
   return(om)  
 }
