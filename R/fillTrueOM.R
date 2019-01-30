@@ -45,8 +45,15 @@ fillTrueOM <- function(om){
   }
   
   # calculate catch matrix using N, F, and M matrices
-  om$CAA <- calcCatch(om$NAA, om$MAA, on$FAA)
+  om$CAA <- calcCatch(om$NAA, om$MAA, om$FAA)
   
+  # generate surveys
+  for (ind in 1:om$nindices){
+    for (iyear in 1:om$nyears){
+      om$indices[[ind]]$IAA[iyear, ] <- om$NAA[iyear, ] * om$indexlist[[ind]]$selxvalues * om$indexlist[[ind]]$qvalues  
+    }
+  }
+
   return(om)  
 }
 
