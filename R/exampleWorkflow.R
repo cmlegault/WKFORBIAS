@@ -15,4 +15,11 @@
 # myomTrue <- fillTrueOM(myom)
 # names(myomTrue)
 # myomTrue$NAA
-
+# myomTrue$Mlist$values[,1] <- 0.9 # age 1 changed to make sure matrix writing is correct
+# 
+# # set some default ASAPoptions
+# ASAPoptions <- list()
+# ASAPoptions$nselblocks <- 1
+# 
+# # write ASAP input file
+# writeASAP(myomTrue, ASAPoptions, "test", "C:\\Users\\chris.legault\\Desktop\\testwriteASAP")
