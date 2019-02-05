@@ -45,6 +45,10 @@ readASAP <- function(asap.name, wd){
   OM$Flist$type <- "constant"
   OM$Flist$values <- asap$F.age
   
+  OM$maturitylist <- list()
+  OM$maturitylist$type <- "constant"
+  OM$maturitylist$values <- asap$maturity
+  
   OM$Wlist <- list()
   OM$Wlist$type <- "constant"
   OM$Wlist$values <- asap$WAA.mats$WAA.catch.all # note: doesn't handle discards
