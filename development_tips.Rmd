@@ -1,0 +1,61 @@
+---
+title: "development_tips"
+author: "Chris Legault"
+date: "February 6, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Starting up
+
+Started by creating a new repository on my GitHub site (https://github.com/cmlegault/WKFORBIAS).  
+
+Created a new project in RStudio and put these default files into the GitHub repository.
+
+Decided to use testthat package so created tests/testthat directory for all the tests.
+
+Created a Shiny app that can be called by function runShiny, note the directory structure required for this.
+
+From the start used roxygen for creating the documentation of functions.
+
+Need to have devtools installed.
+
+## My workflow during development
+
+1. Copy the URL from the Clone or download (green) button on the GitHub page.
+2. Create new project in RStudio, pasting in URL (have to make sure no local copy).
+3. If already have local copy, can Git/Pull in upper left window of RStudio to make sure updated.
+4. In Build tab of RStudio upper left panel, click "Install and Restart" button.
+5. In Console, type devtools::test() to make sure everything is still working (everything should pass).
+6. In R/exampleWorkflow.R file, uncomment code and run to see if things are still working.
+7. Begin editing files or creating new files.
+8. Be sure to use devtools::document() to keep man pages up to date.
+9. Modify DESCRIPTION suggests line if need more packages.
+10. Install and Restart before testing so most recent changes are included in tests.
+11. Try to make functions as small as possible and as bulletproof as possible. Think about what can make them break.
+12. Have fun!
+13. Repeat steps 4-12 as often as possible.
+14. Git/Commit often.
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
