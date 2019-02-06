@@ -39,6 +39,7 @@ Need to have devtools installed.
 12. Have fun!
 13. Repeat steps 4-12 as often as possible.
 14. Git/Commit often.
+15. Occasionally in Build tab run Check to make sure everything passes CRAN muster. (Note this file doesn't, but not a big deal.)
 
 ## R Markdown
 
