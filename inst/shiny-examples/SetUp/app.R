@@ -227,6 +227,17 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
         plotOutput("Nyear1plot")
       )
     )
+  ),
+  
+  tabPanel("Download",
+    sidebarLayout(
+      sidebarPanel(
+        downloadButton("downloadinput", "Download Shiny input"),
+        downloadButton("downloadoutput", "Download Shiny output")
+      ),
+      mainPanel(
+      )
+    )
   )
 )
 
@@ -437,6 +448,16 @@ server <- function(input, output, session) {
      lines(ssb, r)
      title(main = "Demonstration of recruitment variability")
   })
+  
+  output$downloadinput <- downloadHandler(
+    filename = function() {paste0("ShinyInput", Sys.time(), ".DMP")},
+    content = function(file) {save(input, file=file)}
+  )
+  
+  output$downloadoutput <- downloadHandler(
+    filename = function() {paste0("ShinyOutput", Sys.time(), ".DMP")},
+    content = function(file) {save(output, file=file)}
+  )
 }
 
 # Run the application 
