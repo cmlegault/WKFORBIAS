@@ -5,6 +5,7 @@
 # also good to run devtools::test() to make sure everything still working
 # should be able to have R ignore this file when making package - figure out how
 # have to comment code to get it to compile in package, just uncomment block below and run
+# instead of comment/uncomment, can use .Rbuildignore (see http://r-pkgs.had.co.nz/package.html)
 
 ## uncomment starting here ##
 
