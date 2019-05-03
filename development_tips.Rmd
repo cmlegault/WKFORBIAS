@@ -1,7 +1,7 @@
 ---
-title: "development_tips"
+title: "Development Tips"
 author: "Chris Legault"
-date: "February 6, 2019"
+date: 
 output: html_document
 ---
 
@@ -11,35 +11,31 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Starting up
 
-Started by creating a new repository on my GitHub site (https://github.com/cmlegault/WKFORBIAS).  
-
-Created a new project in RStudio and put these default files into the GitHub repository.
-
-Decided to use testthat package so created tests/testthat directory for all the tests.
-
-Created a Shiny app that can be called by function runShiny, note the directory structure required for this.
-
-From the start used roxygen for creating the documentation of functions.
-
-Need to have devtools installed.
+1. Started by creating a new repository on my GitHub site (https://github.com/cmlegault/WKFORBIAS).  
+1. Created a new project in RStudio and put these default files into the GitHub repository.
+1. Decided to use testthat package so created tests/testthat directory for all the tests.
+1. Created a Shiny app that can be called by function runShiny, note the directory structure required for this.
+1. From the start used roxygen for creating the documentation of functions.
+1. Need to have devtools and usethis installed.
 
 ## My workflow during development
 
 1. Copy the URL from the Clone or download (green) button on the GitHub page.
-2. Create new project in RStudio, pasting in URL (have to make sure no local copy).
-3. If already have local copy, can Git/Pull in upper left window of RStudio to make sure updated.
-4. In Build tab of RStudio upper right panel, click "Install and Restart" button.
-5. In Console, type devtools::test() to make sure everything is still working (everything should pass).
-6. In R/exampleWorkflow.R file, uncomment code and run to see if things are still working.
-7. Begin editing files or creating new files.
-8. Be sure to use devtools::document() to keep man pages up to date.
-9. Modify DESCRIPTION suggests line if need more packages.
-10. Install and Restart before testing so most recent changes are included in tests.
-11. Try to make functions as small as possible and as bulletproof as possible. Think about what can make them break.
-12. Have fun!
-13. Repeat steps 4-12 as often as possible.
-14. Git/Commit often.
-15. Occasionally in Build tab run Check to make sure everything passes CRAN muster. (Note this file doesn't, but not a big deal.) Can also do this in Console using devtools::check().
+1. Create new project in RStudio, pasting in URL (have to make sure no local copy).
+1. If already have local copy, can Git/Pull in upper left window of RStudio to make sure updated.
+1. In Build tab of RStudio upper right panel, click "Install and Restart" button.
+1. In Console, type devtools::test() to make sure everything is still working (everything should pass).
+1. In R/exampleWorkflow.R file, uncomment code and run to see if things are still working.
+1. usethis::use_version() and increment last field (development)
+1. Begin editing files or creating new files.
+1. Be sure to use devtools::document() to keep man pages up to date.
+1. Modify DESCRIPTION suggests line if need more packages.
+1. Install and Restart before testing so most recent changes are included in tests.
+1. Try to make functions as small as possible and as bulletproof as possible. Think about what can make them break.
+1. Have fun!
+1. Repeat steps 4-12 as often as possible.
+1. Git/Commit often.
+1. Occasionally in Build tab run Check to make sure everything passes CRAN muster. (Note this file doesn't, but not a big deal.) Can also do this in Console using devtools::check().
 
 ## R Markdown
 
