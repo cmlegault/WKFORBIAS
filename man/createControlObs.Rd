@@ -2,7 +2,9 @@
 % Please edit documentation in R/createControlObs.R
 \name{createControlObs}
 \alias{createControlObs}
-\title{Create control list for observations (determines error structures, CVs, samples sizes, etc.)}
+\title{Create control list for observations
+ 
+Determines error structures, CVs, samples sizes, etc., defaults set so can just change one or more values as needed}
 \usage{
 createControlObs(ESSCAA = 100, CtotCV = 0.05)
 }
@@ -12,5 +14,7 @@ createControlObs(ESSCAA = 100, CtotCV = 0.05)
 \item{CtotCV}{coefficient of variation for total catch in weight (default=0.05)}
 }
 \description{
-Create control list for observations (determines error structures, CVs, samples sizes, etc.)
+Create control list for observations
+ 
+Determines error structures, CVs, samples sizes, etc., defaults set so can just change one or more values as needed
 }
