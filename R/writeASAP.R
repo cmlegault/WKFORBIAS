@@ -7,6 +7,8 @@
 #' @param wd working directory to write ASAP input file to
 #' @export
 
+## note to self: look into using Tim's write asap function as a starting point
+
 writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   filewriteOK <- FALSE
   
