@@ -13,7 +13,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                    choices = c(1900:2020),
                    selected = 1991),
        
-       sliderInput("nyears",
+       sliderInput("nYear",
                    "Number of Years",
                    min = 5,
                    max = 100,
@@ -246,10 +246,10 @@ server <- function(input, output, session) {
   
   observe({
     year1 <- as.numeric(input$year1)
-    nyears <- input$nyears
-    year2 <- year1 + nyears - 1
+    nYear <- input$nYear
+    year2 <- year1 + nYear - 1
     updateSliderInput(session, "Fyears", 
-                      value = c((year1 + floor(nyears / 3)), (year1 + ceiling(2 * nyears / 3))),
+                      value = c((year1 + floor(nYear / 3)), (year1 + ceiling(2 * nYear / 3))),
                       min = year1, max = year2, step = 1)
   })
   
@@ -261,7 +261,7 @@ server <- function(input, output, session) {
   
   years <- reactive({
     yr1 <- as.numeric(input$year1)
-    seq(yr1, yr1 + input$nyears - 1)
+    seq(yr1, yr1 + input$nYear - 1)
   })  
   
   ages <- reactive({
@@ -270,7 +270,7 @@ server <- function(input, output, session) {
   
   Mlist <- reactive({
     M <- list()
-    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nAge, dimnames=list(years()))
+    M$base <- matrix(input$Mbase, nrow=input$nYear, ncol=input$nAge, dimnames=list(years()))
     M$values <- M$base
     M$Merrorflag <- input$Merrorflag
     if(input$Merrorflag == TRUE){
@@ -283,16 +283,16 @@ server <- function(input, output, session) {
   Flist <- reactive({
     FAA <- list()
     year1 <- as.numeric(input$year1)
-    nyears <- input$nyears
+    nYear <- input$nYear
     nAge <- input$nAge
     y1 <- 1
     y2 <- input$Fyears[1] - year1 + 1
     y3 <- input$Fyears[2] - year1 + 1
-    y4 <- nyears
+    y4 <- nYear
     a1 <- 1
     a2 <- input$Fages
     a3 <- nAge
-    Fg <- matrix(NA, nrow = nyears, ncol = nAge)
+    Fg <- matrix(NA, nrow = nYear, ncol = nAge)
     Fg[y1,a1] <- input$Fy1a1
     Fg[y1,a2] <- input$Fy1a2
     Fg[y1,a3] <- input$Fy1a3
@@ -344,7 +344,7 @@ server <- function(input, output, session) {
     }
     FAA$Fgrid <- Fg
     df <- data.frame()
-    for (y in 1:nyears){
+    for (y in 1:nYear){
       thisdf <- data.frame(year = as.integer(y + year1 - 1),
                            age = 1:nAge,
                            Fval = Fg[y,])
@@ -358,7 +358,7 @@ server <- function(input, output, session) {
   Wlist <- reactive({
     W <- list()
     WAA <- input$Winfyear1 * (1 - exp(-input$Kyear1 * seq(1, input$nAge))) ^ 3
-    W$base <- matrix(rep(WAA, each=input$nyears), nrow=input$nyears, ncol=input$nAge)
+    W$base <- matrix(rep(WAA, each=input$nYear), nrow=input$nYear, ncol=input$nAge)
     W$values <- W$base
     W
   })

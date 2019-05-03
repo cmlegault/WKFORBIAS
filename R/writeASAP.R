@@ -16,7 +16,7 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write("# ASAP VERSION 3.0", file=ifile, append=FALSE)
   write("# File created by writeASAP function", file=ifile, append=TRUE)
   write("# Number of Years", file=ifile, append=TRUE)
-  write(om$nyears, file=ifile, append=TRUE)
+  write(om$nYear, file=ifile, append=TRUE)
   write("# First Year", file=ifile, append=TRUE)
   write(om$years[1], file=ifile, append=TRUE)
   write("# Number of Ages", file=ifile, append=TRUE)

@@ -33,8 +33,8 @@ createOM <- function(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wli
   om$inputs$processerrorlist <- processerrorlist
   
   # create blank matrices
-  nyears <- length(years)
-  blankmat <- matrix(NA, nrow=nyears, ncol=nAge)
+  nYear <- length(years)
+  blankmat <- matrix(NA, nrow=nYear, ncol=nAge)
   om$NAA <- blankmat
   om$FAA <- blankmat
   om$MAA <- blankmat

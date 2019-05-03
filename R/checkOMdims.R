@@ -17,25 +17,25 @@
 
 checkOMdims <- function(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wlist, indexlist, catcherrorlist, indexerrorlist, processerrorlist=FALSE){
 
-  nyears <- length(years)
+  nYear <- length(years)
   
   checklist <- list()
   checklist$nyear1 <- ifelse(length(nyear1list$values) == nAge, TRUE, FALSE)
-  checklist$R <- ifelse(length(Rlist$values) == nyears, TRUE, FALSE)
-  checklist$M <- ifelse(dim(Mlist$values) == c(nyears, nAge), TRUE, FALSE)
-  checklist$F <- ifelse(dim(Flist$values) == c(nyears, nAge), TRUE, FALSE)
-  checklist$W <- ifelse(dim(Wlist$values) == c(nyears, nAge), TRUE, FALSE)
+  checklist$R <- ifelse(length(Rlist$values) == nYear, TRUE, FALSE)
+  checklist$M <- ifelse(dim(Mlist$values) == c(nYear, nAge), TRUE, FALSE)
+  checklist$F <- ifelse(dim(Flist$values) == c(nYear, nAge), TRUE, FALSE)
+  checklist$W <- ifelse(dim(Wlist$values) == c(nYear, nAge), TRUE, FALSE)
   checklist$nindices <- ifelse(length(indexlist) == nindices, TRUE, FALSE)
   checklist$index <- list()
   for (ind in 1:nindices){
-    checklist$index[[ind]] <- ifelse(dim(indexlist$index[[ind]]$values) == c(nyears, nAge), TRUE, FALSE)
+    checklist$index[[ind]] <- ifelse(dim(indexlist$index[[ind]]$values) == c(nYear, nAge), TRUE, FALSE)
   }
-  checklist$catcherror <- ifelse(dim(catcherrorlist$values) == c(nyears, nAge), TRUE, FALSE)
+  checklist$catcherror <- ifelse(dim(catcherrorlist$values) == c(nYear, nAge), TRUE, FALSE)
   checklist$nindexerror <- ifelse(length(indexerrorlist) == nindices, TRUE, FALSE)
   for (ind in 1:nindices){
-    checklist$indexerror[[ind]] <- ifelse(dim(indexerrorlist$index[[ind]]$values) == c(nyears, nAge), TRUE, FALSE)
+    checklist$indexerror[[ind]] <- ifelse(dim(indexerrorlist$index[[ind]]$values) == c(nYear, nAge), TRUE, FALSE)
   }
-  checklist$processerror <- ifelse(dim(processerrorlist$values) == c(nyears, nAge), TRUE, FALSE)
+  checklist$processerror <- ifelse(dim(processerrorlist$values) == c(nYear, nAge), TRUE, FALSE)
   
   return(checklist)
 }

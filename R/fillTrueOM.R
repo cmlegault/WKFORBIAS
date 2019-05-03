@@ -5,7 +5,7 @@
 
 fillTrueOM <- function(om){
   
-  blankmat <- matrix(NA, nrow=om$nyears, ncol=om$nAge)
+  blankmat <- matrix(NA, nrow=om$nYear, ncol=om$nAge)
   if (is.null(om$NAA)) om$NAA <- blankmat
   if (is.null(om$FAA)) om$FAA <- blankmat
   if (is.null(om$MAA)) om$MAA <- blankmat
@@ -39,7 +39,7 @@ fillTrueOM <- function(om){
   }
   
   # fill in NAA matrix using F and M matrices
-  for (iyear in 1:(om$nyears-1)){
+  for (iyear in 1:(om$nYear-1)){
     survs <- calcSurvival(om$NAA[iyear, ], om$MAA[iyear, ], om$FAA[iyear], TRUE)
     om$NAA[(iyear+1), 2:(om$nAge)] <- survs[-(om$nAge - 1)]
   }
@@ -49,7 +49,7 @@ fillTrueOM <- function(om){
   
   # generate surveys
   for (ind in 1:om$nindices){
-    for (iyear in 1:om$nyears){
+    for (iyear in 1:om$nYear){
       om$indices[[ind]]$IAA[iyear, ] <- om$NAA[iyear, ] * om$indexlist[[ind]]$selxvalues * om$indexlist[[ind]]$qvalues  
     }
   }

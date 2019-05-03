@@ -25,7 +25,7 @@ readASAP <- function(asap.name, wd){
   OM$sourcedetails$wd <- wd
   
   OM$years <- seq(asap$parms$styr, asap$parms$endyr)
-  OM$nyears <- length(OM$years)
+  OM$nYear <- length(OM$years)
   OM$nAge <- asap$parms$nages
   OM$nindices <- asap$parms$nindices
   
