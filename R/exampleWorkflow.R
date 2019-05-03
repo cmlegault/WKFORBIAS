@@ -18,6 +18,10 @@
 # names(myomTrue)
 # myomTrue$NAA
 # 
+# # create observed data
+# controlObs <- createControlObs()
+# myomTrue <- genObs(myomTrue, controlObs)
+# 
 # # set some default ASAPoptions
 # ASAPoptions <- list()
 # ASAPoptions$nselblocks <- 1

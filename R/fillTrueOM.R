@@ -47,6 +47,12 @@ fillTrueOM <- function(om){
   # calculate catch matrix using N, F, and M matrices
   om$CAA <- calcCatch(om$NAA, om$MAA, om$FAA)
   
+  # calculate total catch in weight
+  om$Ctot <- rep(NA, om$nYear)
+  for (iyear in 1:om$nYear){
+    om$Ctot[iyear] <- calcAggregateBiomass(om$CAA[iyear, ], om$WAA[iyear, ])
+  }
+  
   # generate surveys
   for (ind in 1:om$nInd){
     for (iyear in 1:om$nYear){
