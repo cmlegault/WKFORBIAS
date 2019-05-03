@@ -2,7 +2,7 @@
 #' 
 #' Define all necessary settings for creating true population values and observations with noise.
 #' @param years vector of years in operating model (OM)
-#' @param nages number of ages in OM (assumed to start at age 1)
+#' @param nAge number of ages in OM (assumed to start at age 1)
 #' @param nindices number of indices
 #' @param nyear1list N in first year list
 #' @param Rlist recruitment list
@@ -15,12 +15,12 @@
 #' @param processerrorlist list for process error in survival equation, default=FALSE
 #' @export
 
-createOM <- function(years, nages, nindices, nyear1list, Rlist, Mlist, Flist, Wlist, indexlist, catcherrorlist, indexerrorlist, processerrorlist=FALSE){
+createOM <- function(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wlist, indexlist, catcherrorlist, indexerrorlist, processerrorlist=FALSE){
   om <- list()
   om$inputs <- list()
   # save the input values
   om$inputs$years <- years
-  om$inputs$nages <- nages
+  om$inputs$nAge <- nAge
   om$inputs$nindices <- nindices
   om$inputs$nyear1list <- nyear1list
   om$inputs$Rlist <- Rlist
@@ -34,7 +34,7 @@ createOM <- function(years, nages, nindices, nyear1list, Rlist, Mlist, Flist, Wl
   
   # create blank matrices
   nyears <- length(years)
-  blankmat <- matrix(NA, nrow=nyears, ncol=nages)
+  blankmat <- matrix(NA, nrow=nyears, ncol=nAge)
   om$NAA <- blankmat
   om$FAA <- blankmat
   om$MAA <- blankmat

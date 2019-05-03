@@ -5,7 +5,7 @@
 
 fillTrueOM <- function(om){
   
-  blankmat <- matrix(NA, nrow=om$nyears, ncol=om$nages)
+  blankmat <- matrix(NA, nrow=om$nyears, ncol=om$nAge)
   if (is.null(om$NAA)) om$NAA <- blankmat
   if (is.null(om$FAA)) om$FAA <- blankmat
   if (is.null(om$MAA)) om$MAA <- blankmat
@@ -41,7 +41,7 @@ fillTrueOM <- function(om){
   # fill in NAA matrix using F and M matrices
   for (iyear in 1:(om$nyears-1)){
     survs <- calcSurvival(om$NAA[iyear, ], om$MAA[iyear, ], om$FAA[iyear], TRUE)
-    om$NAA[(iyear+1), 2:(om$nages)] <- survs[-(om$nages - 1)]
+    om$NAA[(iyear+1), 2:(om$nAge)] <- survs[-(om$nAge - 1)]
   }
   
   # calculate catch matrix using N, F, and M matrices

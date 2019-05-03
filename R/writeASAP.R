@@ -18,7 +18,7 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write("# First Year", file=ifile, append=TRUE)
   write(om$years[1], file=ifile, append=TRUE)
   write("# Number of Ages", file=ifile, append=TRUE)
-  write(om$nages, file=ifile, append=TRUE)
+  write(om$nAge, file=ifile, append=TRUE)
   write("# Number of Fleets", file=ifile, append=TRUE)
   write("1", file=ifile, append=TRUE)  # assume only one fleet
   write("# Number of Selectivity Blocks", file=ifile, append=TRUE)
@@ -26,17 +26,17 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write("# Number of Available Indices", file=ifile, append=TRUE)
   write(om$nindices, file=ifile, append=TRUE)
   write("# Natural Mortality", file=ifile, append=TRUE)
-  write(t(om$Mlist$values), file=ifile, append=TRUE, ncolumns=om$nages) # rem transpose matrix
+  write(t(om$Mlist$values), file=ifile, append=TRUE, ncolumns=om$nAge) # rem transpose matrix
   write("# Fecundity Option", file=ifile, append=TRUE)
   write("0", file=ifile, append=TRUE) # assumes SSB is used for fecundity
   write("# Maturity", file=ifile, append=TRUE)
-  write(t(om$maturitylist$values), file=ifile, append=TRUE, ncolumns=om$nages)
+  write(t(om$maturitylist$values), file=ifile, append=TRUE, ncolumns=om$nAge)
   write("# Number of Weights at Age Matrices", file=ifile, append=TRUE)
   nwtmats <- 1  # assume only one WAA matrix for now, need to update later
   write(nwtmats, file=ifile, append=TRUE)  
   for (i in 1:nwtmats){
     write(paste0("# Weight Matrix - ", i), file=ifile, append=TRUE)
-    write(t(om$Wlist$values), file=ifile, append=TRUE, ncolumns=om$nages)
+    write(t(om$Wlist$values), file=ifile, append=TRUE, ncolumns=om$nAge)
   }
   write("# Weights at Age Pointers", file=ifile, append=TRUE) # for now use single WAA for all pointers
   write("1  # catch fleet 1", file=ifile, append=TRUE) 

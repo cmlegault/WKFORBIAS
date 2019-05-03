@@ -33,7 +33,7 @@ test_that("calc Agg B indextime", {
 test_that("check OM dimensions correct", {
   expect_equal(all(unlist(checkOMdims(
     years=2001:2010,
-    nages=5,
+    nAge=5,
     nindices=2,
     nyear1list=list(values=rep(1,5)),
     Rlist=list(values=rep(1,10)),
@@ -51,7 +51,7 @@ test_that("check OM dimensions correct", {
 test_that("check OM dimensions bad", {
   expect_equal(all(unlist(checkOMdims(
     years=2001:2010,
-    nages=5,
+    nAge=5,
     nindices=2,
     nyear1list=list(values=rep(1,5)),
     Rlist=list(values=rep(1,10)),

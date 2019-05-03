@@ -19,7 +19,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                    max = 100,
                    value = 20),
        
-       sliderInput("nages",
+       sliderInput("nAge",
                    "Number of Ages",
                    min = 4,
                    max = 50,
@@ -254,9 +254,9 @@ server <- function(input, output, session) {
   })
   
   observe({
-    nages <- input$nages
-    updateSliderInput(session, "Fages", value = floor(nages/2),
-                      min = 1, max = nages, step = 1)
+    nAge <- input$nAge
+    updateSliderInput(session, "Fages", value = floor(nAge/2),
+                      min = 1, max = nAge, step = 1)
   })
   
   years <- reactive({
@@ -265,12 +265,12 @@ server <- function(input, output, session) {
   })  
   
   ages <- reactive({
-    seq(1, input$nages)
+    seq(1, input$nAge)
   })
   
   Mlist <- reactive({
     M <- list()
-    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nages, dimnames=list(years()))
+    M$base <- matrix(input$Mbase, nrow=input$nyears, ncol=input$nAge, dimnames=list(years()))
     M$values <- M$base
     M$Merrorflag <- input$Merrorflag
     if(input$Merrorflag == TRUE){
@@ -284,15 +284,15 @@ server <- function(input, output, session) {
     FAA <- list()
     year1 <- as.numeric(input$year1)
     nyears <- input$nyears
-    nages <- input$nages
+    nAge <- input$nAge
     y1 <- 1
     y2 <- input$Fyears[1] - year1 + 1
     y3 <- input$Fyears[2] - year1 + 1
     y4 <- nyears
     a1 <- 1
     a2 <- input$Fages
-    a3 <- nages
-    Fg <- matrix(NA, nrow = nyears, ncol = nages)
+    a3 <- nAge
+    Fg <- matrix(NA, nrow = nyears, ncol = nAge)
     Fg[y1,a1] <- input$Fy1a1
     Fg[y1,a2] <- input$Fy1a2
     Fg[y1,a3] <- input$Fy1a3
@@ -323,21 +323,21 @@ server <- function(input, output, session) {
     }
     if (y2 > (y1+1)){
       for (y in (y1+1):(y2-1)){
-        for (a in 1:nages){
+        for (a in 1:nAge){
           Fg[y,a] <- Fg[y1,a] + (y - y1) * (Fg[y2,a] - Fg[y1,a]) / (y2 - y1)
         }
       }
     }
     if (y3 > (y2+1)){
       for (y in (y2+1):(y3-1)){
-        for (a in 1:nages){
+        for (a in 1:nAge){
           Fg[y,a] <- Fg[y2,a] + (y - y2) * (Fg[y3,a] - Fg[y2,a]) / (y3 - y2)
         }
       }
     }
     if (y4 > (y3+1)){
       for (y in (y3+1):(y4-1)){
-        for (a in 1:nages){
+        for (a in 1:nAge){
           Fg[y,a] <- Fg[y3,a] + (y - y3) * (Fg[y4,a] - Fg[y3,a]) / (y4 - y3)
         }
       }
@@ -346,7 +346,7 @@ server <- function(input, output, session) {
     df <- data.frame()
     for (y in 1:nyears){
       thisdf <- data.frame(year = as.integer(y + year1 - 1),
-                           age = 1:nages,
+                           age = 1:nAge,
                            Fval = Fg[y,])
       df <- rbind(df, thisdf)
     }
@@ -357,8 +357,8 @@ server <- function(input, output, session) {
   
   Wlist <- reactive({
     W <- list()
-    WAA <- input$Winfyear1 * (1 - exp(-input$Kyear1 * seq(1, input$nages))) ^ 3
-    W$base <- matrix(rep(WAA, each=input$nyears), nrow=input$nyears, ncol=input$nages)
+    WAA <- input$Winfyear1 * (1 - exp(-input$Kyear1 * seq(1, input$nAge))) ^ 3
+    W$base <- matrix(rep(WAA, each=input$nyears), nrow=input$nyears, ncol=input$nAge)
     W$values <- W$base
     W
   })
@@ -385,7 +385,7 @@ server <- function(input, output, session) {
     r$BHsteepness <- input$steepness
     Mvec <- Mlist()$values[1,]  # use first year for calculations
     Wvec <- Wlist()$values[1,]  # use first year for calculations
-    N0pr <- calcEquilibriumPop(1, input$nages, Mvec, 0)
+    N0pr <- calcEquilibriumPop(1, input$nAge, Mvec, 0)
     SSB0pr <- calcAggregateBiomass(N0pr, Wvec, Mvec, 0, 0)  # assume SSB at start of year for now
     r$BHSSB0 <- SSB0pr * input$R0
     denom <- 5 * input$steepness - 1
@@ -427,14 +427,14 @@ server <- function(input, output, session) {
     Mvec <- Mlist()$values[1,]
     Fvec <- Flist()$values[1,]
     Wvec <- Wlist()$values[1,]
-    NpR <- calcEquilibriumPop(1, input$nages, Mvec, Fvec, input$plusgroupflag)
+    NpR <- calcEquilibriumPop(1, input$nAge, Mvec, Fvec, input$plusgroupflag)
     SSBpR <- calcAggregateBiomass(NpR, Wvec) # assume SSB at start of year for now
     SSB1 <- Rlist()$BHalpha * SSBpR - Rlist()$BHbeta
     R1 <- Rlist()$BHalpha * SSB1 / (Rlist()$BHbeta + SSB1)
-    Nyear1 <- calcEquilibriumPop(R1, input$nages, Mvec, Fvec, input$plusgroupflag)
+    Nyear1 <- calcEquilibriumPop(R1, input$nAge, Mvec, Fvec, input$plusgroupflag)
     Nyear1noise <- addLognormalError(Nyear1, input$Rsigma, input$Rsigmabiasflag)
     if (input$plusgroupflag == TRUE){
-      Nyear1noise[input$nages] <- Nyear1[input$nages] # do not apply noise to plus group
+      Nyear1noise[input$nAge] <- Nyear1[input$nAge] # do not apply noise to plus group
     }
     plot(ages(), Nyear1noise, xlab="Age", ylab="Population N in Year 1", ylim=c(0,max(c(Nyear1, Nyear1noise))))
      lines(ages(), Nyear1)
