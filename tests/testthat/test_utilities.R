@@ -16,6 +16,18 @@ test_that("Lognormal Error bias adjustment", {
   expect_equal(addLognormalError(1, 1, biasadjustflag = TRUE, randomval = 0), exp(-0.5))
 })
 
+test_that("Multinomial Error obs NA", {
+  expect_equal(is.na(addMultinomialError(NA, 100)), TRUE)
+})
+
+test_that("Multinomial Error ess NA", {
+  expect_equal(is.na(addMultinomialError(c(0.2, 0.8), NA)), TRUE)
+})
+
+test_that("Multinomial Error sum(obs) zero", {
+  expect_equal(is.na(addMultinomialError(c(-1,1), 100)), TRUE)
+})
+
 # calcAggregateBiomass
 test_that("calc Agg B NAA NA", {
   expect_equal(is.na(calcAggregateBiomass(NA, 0.3)), TRUE)
