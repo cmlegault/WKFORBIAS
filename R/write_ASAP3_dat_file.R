@@ -34,14 +34,14 @@ WriteASAP3DatFile <- function(fname,dat.object,header.text){
     if(data.class(x)=='matrix'){
       comment.ct <- comment.ct + 1
       cat(comments[comment.ct],'\n',file=fname,append=T)
-      write.table(x,col=F,row=F,quote=T, file=fname,append=T)
+      utils::write.table(x,col=F,row=F,quote=T, file=fname,append=T)
     }  # end of matrix if statement
     
     if(data.class(x)=='list'){
       for (j in 1:length(x)){
         comment.ct <- comment.ct + 1
         cat(comments[comment.ct],'\n',file=fname,append=T)
-        write.table(x[[j]],col=F,row=F,quote=T, file=fname,append=T)
+        utils::write.table(x[[j]],col=F,row=F,quote=T, file=fname,append=T)
       }  # end of 'j' for loop
     }  # end of list if statement
     
@@ -49,9 +49,9 @@ WriteASAP3DatFile <- function(fname,dat.object,header.text){
   
   # Add fleet and survey names
   cat('######\n###### FINIS ######\n# Fleet Names\n',file=fname,append=T)
-  write.table(as.matrix(paste('#$',dat.object$fleet.names,sep='')),col=F,row=F,quote=F, file=fname,append=T)
+  utils::write.table(as.matrix(paste('#$',dat.object$fleet.names,sep='')),col=F,row=F,quote=F, file=fname,append=T)
   cat('# Survey Names\n',file=fname,append=T)
-  write.table(as.matrix(paste('#$',dat.object$survey.names,sep='')),col=F,row=F,quote=F, file=fname,append=T)
+  utils::write.table(as.matrix(paste('#$',dat.object$survey.names,sep='')),col=F,row=F,quote=F, file=fname,append=T)
   cat('#\n',file=fname,append=T)
   
   return()

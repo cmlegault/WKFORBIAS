@@ -8,6 +8,8 @@ genObs(om, controlObs)
 }
 \arguments{
 \item{om}{operating model list from fillTrueOM}
+
+\item{controlObs}{control object for creating observed values}
 }
 \description{
 Generate observations from true OM

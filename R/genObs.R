@@ -1,6 +1,7 @@
 #' Generate observations from true OM
 #' 
 #' @param om operating model list from fillTrueOM
+#' @param controlObs control object for creating observed values
 #' @export
 
 genObs <- function(om, controlObs){

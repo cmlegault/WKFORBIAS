@@ -14,7 +14,7 @@ addMultinomialError <- function(obs, ess, randomval=NULL){
       # don't know how to use repeatable random draws for multinomial
     }
     sumobs <- sum(obs)
-    rmultdraw <- rmultinom(1, ess, prob = (obs / sumobs))
+    rmultdraw <- stats::rmultinom(1, ess, prob = (obs / sumobs))
     applied <- rmultdraw * sumobs / ess
   }
   return(applied)
