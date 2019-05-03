@@ -28,7 +28,7 @@ Need to have devtools installed.
 1. Copy the URL from the Clone or download (green) button on the GitHub page.
 2. Create new project in RStudio, pasting in URL (have to make sure no local copy).
 3. If already have local copy, can Git/Pull in upper left window of RStudio to make sure updated.
-4. In Build tab of RStudio upper left panel, click "Install and Restart" button.
+4. In Build tab of RStudio upper right panel, click "Install and Restart" button.
 5. In Console, type devtools::test() to make sure everything is still working (everything should pass).
 6. In R/exampleWorkflow.R file, uncomment code and run to see if things are still working.
 7. Begin editing files or creating new files.
