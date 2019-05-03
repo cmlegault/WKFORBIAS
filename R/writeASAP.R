@@ -26,7 +26,7 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write("# Number of Selectivity Blocks", file=ifile, append=TRUE)
   write(ASAPoptions$nselblocks, file=ifile, append=TRUE)
   write("# Number of Available Indices", file=ifile, append=TRUE)
-  write(om$nindices, file=ifile, append=TRUE)
+  write(om$nInd, file=ifile, append=TRUE)
   write("# Natural Mortality", file=ifile, append=TRUE)
   write(t(om$Mlist$values), file=ifile, append=TRUE, ncolumns=om$nAge) # rem transpose matrix
   write("# Fecundity Option", file=ifile, append=TRUE)

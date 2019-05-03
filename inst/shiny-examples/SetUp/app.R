@@ -29,7 +29,7 @@ ui <- navbarPage(strong("WKFORBIAS Set Up"),
                      "Last Age a Plus Group?",
                      value = TRUE),
        
-       sliderInput("nindices",
+       sliderInput("nInd",
                    "Number of Indices",
                    min = 1,
                    max = 4,
@@ -365,7 +365,7 @@ server <- function(input, output, session) {
   
   indexlist <- reactive({
     index <- list()
-    for (ind in 1:input$nindices){
+    for (ind in 1:input$nInd){
       index[[ind]] <- list()
       if (ind == 1){
         index[[ind]]$A50 <- input$i1A50
@@ -404,7 +404,7 @@ server <- function(input, output, session) {
   output$dimPlot <- renderPlot({
     ya <- expand.grid(Age = ages(), Year = years())
     plot(ya$Age, ya$Year, xlab="Age", ylab="Year")
-     title(paste("Number of Indices =", input$nindices))
+     title(paste("Number of Indices =", input$nInd))
    })
    
   output$Mplot <- renderPlot({

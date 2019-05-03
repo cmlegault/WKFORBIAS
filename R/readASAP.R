@@ -27,7 +27,7 @@ readASAP <- function(asap.name, wd){
   OM$years <- seq(asap$parms$styr, asap$parms$endyr)
   OM$nYear <- length(OM$years)
   OM$nAge <- asap$parms$nages
-  OM$nindices <- asap$parms$nindices
+  OM$nInd <- asap$parms$nindices
   
   OM$nyear1list <- list()
   OM$nyear1list$type <- "constant"
@@ -54,7 +54,7 @@ readASAP <- function(asap.name, wd){
   OM$Wlist$values <- asap$WAA.mats$WAA.catch.all # note: doesn't handle discards
   
   OM$indexlist <- list()
-  for (ind in 1:OM$nindices){
+  for (ind in 1:OM$nInd){
     OM$indexlist[[ind]] <- list()
     OM$indexlist[[ind]]$selxtype <- "constant"
     OM$indexlist[[ind]]$selxvalues <- asap$index.sel[ind, ]
@@ -69,7 +69,7 @@ readASAP <- function(asap.name, wd){
   
   OM$indexerrorlist <- list()
   OM$indexerrorlist$type <- "observation error only"
-  for (ind in 1:OM$nindices){
+  for (ind in 1:OM$nInd){
     OM$indexerrorlist[[ind]] <- list()
     OM$indexerrorlist[[ind]]$CVvalues <- asap$index.cv[[ind]] # assumes all years have index
     OM$indexerrorlist[[ind]]$ESSvalues <- asap$index.Neff.init[ind, ]

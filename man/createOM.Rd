@@ -4,7 +4,7 @@
 \alias{createOM}
 \title{Create Operating Model}
 \usage{
-createOM(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
+createOM(years, nAge, nInd, nyear1list, Rlist, Mlist, Flist, Wlist,
   indexlist, catcherrorlist, indexerrorlist, processerrorlist = FALSE)
 }
 \arguments{
@@ -12,7 +12,7 @@ createOM(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
 
 \item{nAge}{number of ages in OM (assumed to start at age 1)}
 
-\item{nindices}{number of indices}
+\item{nInd}{number of indices}
 
 \item{nyear1list}{N in first year list}
 

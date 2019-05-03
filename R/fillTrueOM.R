@@ -12,7 +12,7 @@ fillTrueOM <- function(om){
   if (is.null(om$WAA)) om$WAA <- blankmat
   if (is.null(om$indices)){ 
     om$indices <- list()
-    for (ind in 1:om$nindices){
+    for (ind in 1:om$nInd){
       om$indices[[ind]] <- list()
       om$indices[[ind]]$IAA <- blankmat 
     }
@@ -48,7 +48,7 @@ fillTrueOM <- function(om){
   om$CAA <- calcCatch(om$NAA, om$MAA, om$FAA)
   
   # generate surveys
-  for (ind in 1:om$nindices){
+  for (ind in 1:om$nInd){
     for (iyear in 1:om$nYear){
       om$indices[[ind]]$IAA[iyear, ] <- om$NAA[iyear, ] * om$indexlist[[ind]]$selxvalues * om$indexlist[[ind]]$qvalues  
     }

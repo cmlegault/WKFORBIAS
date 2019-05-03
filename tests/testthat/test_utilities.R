@@ -34,7 +34,7 @@ test_that("check OM dimensions correct", {
   expect_equal(all(unlist(checkOMdims(
     years=2001:2010,
     nAge=5,
-    nindices=2,
+    nInd=2,
     nyear1list=list(values=rep(1,5)),
     Rlist=list(values=rep(1,10)),
     Mlist=list(values=matrix(1,10,5)),
@@ -52,7 +52,7 @@ test_that("check OM dimensions bad", {
   expect_equal(all(unlist(checkOMdims(
     years=2001:2010,
     nAge=5,
-    nindices=2,
+    nInd=2,
     nyear1list=list(values=rep(1,5)),
     Rlist=list(values=rep(1,10)),
     Mlist=list(values=matrix(1,10,5)),
