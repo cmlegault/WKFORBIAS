@@ -1,11 +1,17 @@
 Package: WKFORBIAS
 Title: Create and anlyze retro assessments
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: person("Chris", "Legault", email = "chris.legault@noaa.gov", role = c("aut", "cre"))
 Description: Create data that exhibits retrospective patterns. Apply different fixes to retros and see how they perform.
-Depends: R (>= 3.4.4)
-License: What license is it under?
+Depends: R (>= 3.6.0)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
-Suggests: testthat, shiny, ggplot2, dplyr, tidyr
+RoxygenNote: 6.1.1
+Imports: 
+    magrittr,
+    dplyr,
+    testthat,
+    ggplot2,
+    tidyr,
+    shiny

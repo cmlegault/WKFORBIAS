@@ -4,13 +4,13 @@
 \alias{checkOMdims}
 \title{Check Operating Model Dimensions}
 \usage{
-checkOMdims(years, nages, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
+checkOMdims(years, nAge, nindices, nyear1list, Rlist, Mlist, Flist, Wlist,
   indexlist, catcherrorlist, indexerrorlist, processerrorlist = FALSE)
 }
 \arguments{
 \item{years}{vector of years in operating model (OM)}
 
-\item{nages}{number of ages in OM (assumed to start at age 1)}
+\item{nAge}{number of ages in OM (assumed to start at age 1)}
 
 \item{nindices}{number of indices}
 

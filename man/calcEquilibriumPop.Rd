@@ -4,12 +4,12 @@
 \alias{calcEquilibriumPop}
 \title{Equilibrium Population}
 \usage{
-calcEquilibriumPop(eqR, nages, Mval, Fval, plusgroupflag = TRUE)
+calcEquilibriumPop(eqR, nAge, Mval, Fval, plusgroupflag = TRUE)
 }
 \arguments{
 \item{eqR}{number of recruits in equilibrium population}
 
-\item{nages}{number of ages in population}
+\item{nAge}{number of ages in population}
 
 \item{Mval}{vector of natural mortality at age or single value applied to all ages}
 
