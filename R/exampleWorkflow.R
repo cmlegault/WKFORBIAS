@@ -28,3 +28,8 @@
 # 
 # # write ASAP input file
 # writeASAP(myomTrue, ASAPoptions, "test", "C:\\Users\\chris.legault\\Desktop\\testwriteASAP")
+# need to figure out if this is the way to create ASAP input file, or if better to use write_ASAP3_dat_file.R
+# pro of 1: easy to use with other input (e.g., SAM) and modified ASAP input
+# pro of 2: already written and ready to go
+# con of 1: need to finish writing the full function
+# con of 2: need to translate from om into asap.dat object, may not be easy/possible if start with something other than ASAP
