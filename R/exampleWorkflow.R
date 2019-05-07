@@ -26,7 +26,7 @@
 # myomTrue <- genObs(myomTrue, controlObs)
 # 
 # # set some default ASAPoptions
-# ASAPoptions$Freport_wtopt <- -999 # will produce error if run ASAP, just checking to see if it works
+# ASAPoptions$use_likelihood_constants <- 0 # should not be using likelihood constants
 # 
 # # write ASAP input file
 # writeASAP(myomTrue, ASAPoptions, "test", "C:\\Users\\chris.legault\\Desktop\\testwriteASAP")

@@ -51,7 +51,7 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
     write(ASAPoptions$fleet_sel_blocks[iyear], file=ifile, append=TRUE)
   }
   write("# Selectivity Options for each block 1=by age, 2=logisitic, 3=double logistic", file=ifile, append=TRUE)
-  write(ASAPoptions$ASAPoptions$fleet_sel_option, file=ifile, append=TRUE, ncolumns=ASAPoptions$nselblocks)
+  write(ASAPoptions$fleet_sel_option, file=ifile, append=TRUE, ncolumns=ASAPoptions$nselblocks)
   for (iblock in 1:ASAPoptions$nselblocks){
     startrow <- (iblock - 1) * (om$nAge + 6) + 1
     endrow <- startrow + om$nAge + 6 - 1
@@ -66,6 +66,15 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write(c(ASAPoptions$Freport_agemin, ASAPoptions$Freport_agemax), file=ifile, append=TRUE, ncolumns=2)
   write("# Average F report option (1=unweighted, 2=Nweighted, 3=Bweighted)", file=ifile, append=TRUE)
   write(ASAPoptions$Freport_wtopt, file=ifile, append=TRUE)
+  write("# Use Likelihood constants? (1=yes)", file=ifile, append=TRUE)
+  write(ASAPoptions$use_likelihood_constants, file=ifile, append=TRUE)
+  write("# Release Mortality by Fleet", file=ifile, append=TRUE)
+  write(ASAPoptions$release_mort, file=ifile, append=TRUE, ncolumns=om$nFleet)
+  write("# Catch Data", file=ifile, append=TRUE) ### note: not yet generalized to nFleet > 1
+  write("# Fleet-1 Catch Data", file=ifile, append=TRUE)
+  mymat <- cbind(ASAPoptions$catch_comp_mats$catch.fleet1.ob, ASAPoptions$catch_obs[1, ])
+  write(t(mymat), file=ifile, append=TRUE, ncolumns=(om$nAge+1))
+  
   
   #write("", file=ifile, append=TRUE)
   

@@ -92,6 +92,11 @@ readASAP <- function(asap.name, wd){
   ASAPoptions$Freport_agemin <- asap$options$Freport.agemin
   ASAPoptions$Freport_agemax <- asap$options$Freport.agemax
   ASAPoptions$Freport_wtopt <- asap$options$Freport.wtopt
+  ASAPoptions$use_likelihood_constants <- asap$options$use.likelihood.constants
+  ASAPoptions$release_mort <- asap$initial.guesses$release.mort
+  ASAPoptions$catch_obs <- asap$catch.obs
+  ASAPoptions$catch_comp_mats <- asap$catch.comp.mats
+  
   
   return(list(OM=OM, ASAPoptions=ASAPoptions))
 }
