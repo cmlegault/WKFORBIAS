@@ -95,8 +95,19 @@ readASAP <- function(asap.name, wd){
   ASAPoptions$use_likelihood_constants <- asap$options$use.likelihood.constants
   ASAPoptions$release_mort <- asap$initial.guesses$release.mort
   ASAPoptions$catch_obs <- asap$catch.obs
+  ASAPoptions$discard_obs <- asap$discard.obs
+  ASAPoptions$fleet_prop_release <- asap$fleet.prop.release
   ASAPoptions$catch_comp_mats <- asap$catch.comp.mats
-  
+  ASAPoptions$index_units_aggregate <- asap$control.parms$index.units.aggregate
+  ASAPoptions$index_units_proportions <- asap$control.parms$index.units.proportions
+  ASAPoptions$index_WAA_point <- asap$control.parms$index.WAA.point
+  ASAPoptions$index_month <- asap$control.parms$index.month
+  ASAPoptions$index_sel_choice <- asap$control.parms$index.sel.choice
+  ASAPoptions$index_sel_option <- rep(1, asap$parms$nindices)  # note index.sel.option not in rdat file!
+  ASAPoptions$index_sel_start_age <- asap$control.parms$index.sel.start.age
+  ASAPoptions$index_sel_end_age <- asap$control.parms$index.sel.end.age
+  ASAPoptions$index_age_comp_flag <- asap$control.parms$index.age.comp.flag
+  ASAPoptions$index_use_flag <- asap$initial.guesses$index.use.flag
   
   return(list(OM=OM, ASAPoptions=ASAPoptions))
 }

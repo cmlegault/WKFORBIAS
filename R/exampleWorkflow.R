@@ -27,6 +27,7 @@
 # 
 # # set some default ASAPoptions
 # ASAPoptions$use_likelihood_constants <- 0 # should not be using likelihood constants
+# ASAPoptions$index_sel_option[1] <- 2 # for Simple.dat because index_sel_option not in rdat file
 # 
 # # write ASAP input file
 # writeASAP(myomTrue, ASAPoptions, "test", "C:\\Users\\chris.legault\\Desktop\\testwriteASAP")
