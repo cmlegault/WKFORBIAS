@@ -50,7 +50,22 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   for (iyear in 1:om$nYear){
     write(ASAPoptions$fleet_sel_blocks[iyear], file=ifile, append=TRUE)
   }
-  
+  write("# Selectivity Options for each block 1=by age, 2=logisitic, 3=double logistic", file=ifile, append=TRUE)
+  write(ASAPoptions$ASAPoptions$fleet_sel_option, file=ifile, append=TRUE, ncolumns=ASAPoptions$nselblocks)
+  for (iblock in 1:ASAPoptions$nselblocks){
+    startrow <- (iblock - 1) * (om$nAge + 6) + 1
+    endrow <- startrow + om$nAge + 6 - 1
+    write(paste0("# Selectivity Block #", iblock, " Data"), file=ifile, append=TRUE)
+    write(ASAPoptions$fleet_sel_ini[startrow:endrow, ], file=ifile, append=TRUE, ncolumns=4)
+  }
+  write("# Fleet Start Age", file=ifile, append=TRUE)
+  write(ASAPoptions$fleet_sel_start_age, file=ifile, append=TRUE, ncolumns=om$nFleet)
+  write("# Fleet End Age", file=ifile, append=TRUE)
+  write(ASAPoptions$fleet_sel_end_age, file=ifile, append=TRUE, ncolumns=om$nFleet)
+  write("# Age Range for Average F", file=ifile, append=TRUE)
+  write(c(ASAPoptions$Freport_agemin, ASAPoptions$Freport_agemax), file=ifile, append=TRUE, ncolumns=2)
+  write("# Average F report option (1=unweighted, 2=Nweighted, 3=Bweighted)", file=ifile, append=TRUE)
+  write(ASAPoptions$Freport_wtopt, file=ifile, append=TRUE)
   
   #write("", file=ifile, append=TRUE)
   

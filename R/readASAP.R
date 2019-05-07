@@ -28,6 +28,10 @@ readASAP <- function(asap.name, wd){
   OM$nYear <- length(OM$years)
   OM$nAge <- asap$parms$nages
   OM$nInd <- asap$parms$nindices
+  OM$nFleet <- asap$parms$nfleets
+  if (OM$nFleet > 1){
+    return("Error: nFleet > 1 not supported yet")
+  }
   
   OM$nyear1list <- list()
   OM$nyear1list$type <- "constant"
@@ -79,8 +83,16 @@ readASAP <- function(asap.name, wd){
   
   # create list of ASAP options
   ASAPoptions <- list()
+  ASAPoptions$nselblocks <- asap$parms$nselblocks
   ASAPoptions$fleet_sel_blocks <- as.numeric(asap$fleet.sel.blocks)
-
+  ASAPoptions$fleet_sel_option <- asap$fleet.sel.option
+  ASAPoptions$fleet_sel_ini <- asap$sel.input.mats$fleet.sel.ini
+  ASAPoptions$fleet_sel_start_age <- asap$fleet.sel.start.age
+  ASAPoptions$fleet_sel_end_age <- asap$fleet.sel.end.age
+  ASAPoptions$Freport_agemin <- asap$options$Freport.agemin
+  ASAPoptions$Freport_agemax <- asap$options$Freport.agemax
+  ASAPoptions$Freport_wtopt <- asap$options$Freport.wtopt
+  
   return(list(OM=OM, ASAPoptions=ASAPoptions))
 }
 
