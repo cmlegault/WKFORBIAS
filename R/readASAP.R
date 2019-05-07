@@ -108,6 +108,12 @@ readASAP <- function(asap.name, wd){
   ASAPoptions$index_sel_end_age <- asap$control.parms$index.sel.end.age
   ASAPoptions$index_age_comp_flag <- asap$control.parms$index.age.comp.flag
   ASAPoptions$index_use_flag <- asap$initial.guesses$index.use.flag
+  ASAPoptions$index_sel_ini <- asap$sel.input.mats$index.sel.ini
+  ASAPoptions$index_year_counter <- asap$index.year.counter
+  ASAPoptions$index_obs <- asap$index.obs
+  ASAPoptions$index_cv <- asap$index.cv
+  ASAPoptions$index_comp_mats <- asap$index.comp.mats
+  ASAPoptions$index_Neff_init <- asap$index.Neff.init
   
   return(list(OM=OM, ASAPoptions=ASAPoptions))
 }

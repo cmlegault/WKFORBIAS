@@ -56,7 +56,7 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
     startrow <- (iblock - 1) * (om$nAge + 6) + 1
     endrow <- startrow + om$nAge + 6 - 1
     write(paste0("# Selectivity Block #", iblock, " Data"), file=ifile, append=TRUE)
-    write(ASAPoptions$fleet_sel_ini[startrow:endrow, ], file=ifile, append=TRUE, ncolumns=4)
+    write(t(ASAPoptions$fleet_sel_ini[startrow:endrow, ]), file=ifile, append=TRUE, ncolumns=4)
   }
   write("# Fleet Start Age", file=ifile, append=TRUE)
   write(ASAPoptions$fleet_sel_start_age, file=ifile, append=TRUE, ncolumns=om$nFleet)
@@ -102,6 +102,23 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write(ASAPoptions$index_age_comp_flag, file=ifile, append=TRUE, ncolumns=om$nInd)
   write("# Use Index (Yes=1)", file=ifile, append=TRUE)
   write(ASAPoptions$index_use_flag, file=ifile, append=TRUE, ncolumns=om$nInd)
+  for (ind in 1:om$nInd){
+    write(paste0("# Index-", ind, " Selectivity Data"), file=ifile, append=TRUE)
+    startrow <- (ind - 1) * (om$nAge + 6) + 1
+    endrow <- startrow + om$nAge + 6 - 1
+    write(t(ASAPoptions$index_sel_ini[startrow:endrow, ]), file=ifile, append=TRUE, ncolumns=4)
+  }
+  for (ind in 1:om$nInd){
+    write(paste0("# Index-", ind, " Data"), file=ifile, append=TRUE)
+    myind <- ind * 2 - 1
+    val <- rep(-999, om$nYear)
+    val[ASAPoptions$index_year_counter[[ind]]] <- ASAPoptions$index_obs[[ind]]
+    cv <- rep(1, om$nYear)
+    cv[ASAPoptions$index_year_counter[[ind]]] <- ASAPoptions$index_cv[[ind]]
+    ess <- ASAPoptions$index_Neff_init[ind, ]
+    mymat <- cbind(om$years, val, cv, ASAPoptions$index_comp_mats[[myind]], ess)
+    write(t(mymat), file=ifile, append=TRUE, ncolumns=(om$nAge + 4))
+  }
   
   
   #write("", file=ifile, append=TRUE)
