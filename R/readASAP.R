@@ -76,8 +76,12 @@ readASAP <- function(asap.name, wd){
   }
   
   OM$processerrorlist <- FALSE
+  
+  # create list of ASAP options
+  ASAPoptions <- list()
+  ASAPoptions$fleet_sel_blocks <- as.numeric(asap$fleet.sel.blocks)
 
-  return(OM)
+  return(list(OM=OM, ASAPoptions=ASAPoptions))
 }
 
 # example call

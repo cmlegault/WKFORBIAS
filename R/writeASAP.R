@@ -7,8 +7,6 @@
 #' @param wd working directory to write ASAP input file to
 #' @export
 
-## note to self: look into using Tim's write asap function as a starting point
-
 writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   filewriteOK <- FALSE
   
@@ -47,7 +45,15 @@ writeASAP <- function(om, ASAPoptions, ASAPinputFileName, wd){
   write("1  # discards all fleets", file=ifile, append=TRUE) 
   write("1  # SSB", file=ifile, append=TRUE) 
   write("1  # Jan-1", file=ifile, append=TRUE) 
-
+  write("# Selectivity Block Assignment", file=ifile, append=TRUE)
+  write("# Fleet 1 Selectivity Block Assignment", file=ifile, append=TRUE)
+  for (iyear in 1:om$nYear){
+    write(ASAPoptions$fleet_sel_blocks[iyear], file=ifile, append=TRUE)
+  }
+  
+  
+  #write("", file=ifile, append=TRUE)
+  
   # add filewriteOK <- TRUE when ASAP input file successfully written
   return(filewriteOK)
 }

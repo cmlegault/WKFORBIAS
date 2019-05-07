@@ -10,8 +10,11 @@
 ## uncomment starting here ##
 
 # # get data from an ASAP run
-# myom <- readASAP("simple", "C:\\Users\\chris.legault\\Desktop\\testplots")
+# ASAPlist <- readASAP("simple", "C:\\Users\\chris.legault\\Desktop\\testplots")
+# myom <- ASAPlist$OM
+# ASAPoptions <- ASAPlist$ASAPoptions
 # names(myom)
+# names(ASAPoptions)
 # 
 # # fill in true values
 # myomTrue <- fillTrueOM(myom)
