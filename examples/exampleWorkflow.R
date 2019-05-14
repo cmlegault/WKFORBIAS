@@ -7,7 +7,9 @@
 
 # Example Workflow
 # get data from an ASAP run
-ASAPlist <- readASAP("simple", "C:\\Users\\chris.legault\\Desktop\\testplots")
+my.dir <- "C:\\Users\\chris.legault\\Desktop\\testplots"
+file.copy(from = "./examples/Simple.dat", to = my.dir, overwrite = TRUE)
+ASAPlist <- readASAP("Simple", my.dir)
 myom <- ASAPlist$OM
 ASAPoptions <- ASAPlist$ASAPoptions
 names(myom)
