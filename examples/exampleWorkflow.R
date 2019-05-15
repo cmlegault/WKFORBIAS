@@ -1,14 +1,16 @@
 # example workflow
 # just a placeholder for testing
 # convert to vignette later
+
 # don't forget to Build>Install and Restart first
-# run devtools::check()
-# also good to run devtools::test() to make sure everything still working
+# run devtools::check() to make sure package passes
+# run devtools::test() to make sure functions still working
 
 # Example Workflow
 # get data from an ASAP run
 my.dir <- "C:\\Users\\chris.legault\\Desktop\\testplots"
-file.copy(from = "./examples/Simple.dat", to = my.dir, overwrite = TRUE)
+wkforbias.dir <- find.package("WKFORBIAS")
+file.copy(from = file.path(wkforbias.dir, "examples", "Simple.dat"), to = my.dir, overwrite = TRUE)
 ASAPlist <- readASAP("Simple", my.dir)
 myom <- ASAPlist$OM
 ASAPoptions <- ASAPlist$ASAPoptions
