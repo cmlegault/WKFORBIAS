@@ -10,7 +10,10 @@
 # get data from an ASAP run
 my.dir <- "C:\\Users\\chris.legault\\Desktop\\testplots"
 wkforbias.dir <- find.package("WKFORBIAS")
-file.copy(from = file.path(wkforbias.dir, "examples", "Simple.dat"), to = my.dir, overwrite = TRUE)
+file.copy(from = file.path(wkforbias.dir, "extdata", "Simple.dat"), to = my.dir, overwrite = TRUE)
+# need to run ASAP GUI with Simple.dat to get correct output filenames
+# alternatively, shell ASAP3.exe -ind Simple.dat then file.copy(asap3.rdat, Simple.rdat)
+# but the latter won't get the rest of the files copied over, so won't be able to open in GUI later
 ASAPlist <- readASAP("Simple", my.dir)
 myom <- ASAPlist$OM
 ASAPoptions <- ASAPlist$ASAPoptions
